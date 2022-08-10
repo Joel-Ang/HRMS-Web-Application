@@ -74,7 +74,7 @@
     }
 </style>
 
-<title> Create a Leave Application </title>
+<title> Edit Leave Application </title>
 </head>
  
  <body>
@@ -94,30 +94,45 @@
         <button class="openbtn" onclick="openNav()">☰</button>
 
     <fieldset>     
-      <legend style="text-align: center;"><h1> &nbsp;Create Leave application&nbsp; </h1></legend>
+      <legend style="text-align: center;"><h1> &nbsp; Edit Leave Application &nbsp; </h1></legend>
       
-      <form method="POST" action="/addLeave" style="text-align: center;">
-        <% name.forEach(function(result){ %>
-        <label> Name of Applicant: </label>
-        <input type="text" name="applicant" value="<%= result.Staff_name %>" readonly/><br /><br />
-        <% }) %>
+      <form method="POST" action="/editLeave" style="text-align: center;">
+        <% availableLeaves.forEach(function(leave){ %>
 
         <label> Request Date: </label>
-        <input type="text" name="requestdate" id="requestdate" value="<%= session.username %>" readonly/><br /><br />
+        <input type="text" name="requestdate" value="<%= leave.date_requested %>" readonly/><br /><br />
 
         <label>Reason for request: </label>
-        <input type="radio" id="requestreason" name="requestreason" value="1" required/>
+        <% if (leave.reason == 1) {%>
+        <input type="radio" id="requestreason" name="requestreason" value="1" checked required/>
         <label for="Annual Leave">Annual Leave</label>
-        <input type="radio" id="requestreason" name="requestreason" value="2"/>
+        <input type="radio" id="requestreason" name="requestreason" value="2" />
         <label for="Emergency Leave">Emergency Leave</label>
-        <input type="radio" id="requestreason" name="requestreason" value="3"/>
+        <input type="radio" id="requestreason" name="requestreason" value="3" />
         <label for="Others">Others</label><br><br>
-
+        
+        <% } else if (leave.reason == 2) {%>
+          <input type="radio" id="requestreason" name="requestreason" value="1" required/>
+          <label for="Annual Leave">Annual Leave</label>
+          <input type="radio" id="requestreason" name="requestreason" value="2" checked />
+          <label for="Emergency Leave">Emergency Leave</label>
+          <input type="radio" id="requestreason" name="requestreason" value="3" />
+          <label for="Others">Others</label><br><br>
+        
+        <% } else {%>
+          <input type="radio" id="requestreason" name="requestreason" value="1" required/>
+          <label for="Annual Leave">Annual Leave</label>
+          <input type="radio" id="requestreason" name="requestreason" value="2" />
+          <label for="Emergency Leave">Emergency Leave</label>
+          <input type="radio" id="requestreason" name="requestreason" value="3" checked />
+          <label for="Others">Others</label><br><br>
+        <% } %>
+        
         <label for="startdate">Start Date: </label>
-        <input type="date" name="startdate" id="startdate" onchange="numofdays()">
+        <input type="date" name="startdate" id="startdate" value="<%= leave.start_date %>" onchange="numofdays()">
         &nbsp;&nbsp;
         <label for="enddate">End Date: </label>
-        <input type="date" name="enddate" id="enddate" onchange="numofdays()"><br><br> 
+        <input type="date" name="enddate" id="enddate" value="<%= leave.end_date %>" onchange="numofdays()"><br><br> 
         
         <div id="numdays">
           <label class="form">Expected no. of days:</label>
@@ -125,19 +140,15 @@
         </div><br><br> 
 
 
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Update" />
         <input type="submit" value="Save as draft" /><br><br>
         
         <!-- Available leaves to apply as of today: - -->
-        
+        <% }) %>
       </form>
     </fieldset>
 
   <script>
-    // get and display today's date in "dd/mm/yyyy" format
-    const today = new Date().toJSON().slice(0,10).split('-').reverse().join('/');
-    document.getElementById('requestdate').value = today;
-
     // calculates how many days are between "startdate" and "enddate" chosen
     function calcDays() {
       var start = new Date(document.getElementById("startdate").value);

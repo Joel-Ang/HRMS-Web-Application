@@ -175,4 +175,25 @@ module.exports = function(app) {
       res.redirect("/login");
   });
 
+  /** Get device values for a specific device from the database to display in the edit device page (editDevice.html) */
+  app.get("/editLeave", function (req, res) {
+    if(req.session.username) {
+      let sqlquery =  " SELECT Leave_.Leave_id, Staff.Staff_name, Department.Department_name, Leave_Reason.reason, Leave_.date_requested, Leave_.start_date, Leave_.end_date, Leave_.status" +
+                      " FROM Leave_" +
+                      " JOIN Staff ON Leave_.Staff_id = Staff.Staff_id" +
+                      " JOIN Department ON Staff.Dept_id = Department.Dept_id" +
+                      " JOIN Leave_Reason ON Leave_.LR_id = Leave_Reason.LR_id" +
+                      " WHERE Leave_id = ?";
+
+      db.query(sqlquery, req.query.id, (err, result) => {
+        if (err) {
+          res.redirect("/allLeaves"); // redirect to view devices page if unsuccessful
+        }
+        else { // If successful, pass the result as a parameter to editDevice.html page
+          res.render("editLeave.html", { availableLeaves: result });
+        }
+      });
+    }
+  });
+
 }

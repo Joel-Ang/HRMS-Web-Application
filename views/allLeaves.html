@@ -154,23 +154,23 @@
                     <td><%= (leave.start_date).getDate(); %>/<%= (leave.start_date).getMonth() + 1; %>/<%= (leave.start_date).getFullYear(); %></td>
                     <td><%= (leave.end_date).getDate(); %>/<%= (leave.end_date).getMonth() + 1 ;%>/<%= (leave.end_date).getFullYear(); %></td>
                     
-                    <% if (leave.status == 'Approved' ){%>
+                    <% if (leave.status == 'Approved') {%>
                       <td style="color: green;"><b><%= leave.status %></b></td>
                     
-                    <% } else if (leave.status == 'Rejected' ){%>
+                    <% } else if (leave.status == 'Rejected') {%>
                       <td style="color: red;"><b><%= leave.status %></b></td>
 
                     <% } else {%>
                       <td style="color: orange;"><b><%= leave.status %></b></td>
-                    <%}%>
+                    <% } %>
 
-                    <!-- <td><a href="/editLeave?id=<%= leave.Leave_id %>">
-                      <button class="button">edit</button>
-                    </a></td> -->
-                    
+                    <td><a href="/editLeave?id=<%= leave.Leave_id %>">
+                        edit
+                    </a></td>
+            
                     <td><a href="/deleteLeave?id=<%= leave.Leave_id %>" 
-                      onclick="return confirm('Are you sure you want to delete?')">
-                      delete
+                        onclick="return confirm('Are you sure you want to delete?')">
+                        delete
                     </a></td>
 
                     <% }) %>
