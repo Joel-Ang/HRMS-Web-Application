@@ -1,0 +1,19 @@
+INSERT INTO Department (name) 
+Values ('Sales'), ('Purchase'), ('Marketing'), ('Finance'), ('Human Resource'), ('Operations');
+
+INSERT INTO Role (Role_name) 
+Values ('Admin'), ('Manager'), ('Staff');
+
+INSERT INTO Staff (Dept_id, Role_id, Staff_name, email, address, username, password) 
+VALUES (5, 1, 'Sam Lee', 'sam@gmail.com', '34 Jurong Rd', 'sam001', 'a1234'),
+VALUES (1, 2, 'Thomas Ng', 'thomas@gmail.com', '451 Clementi Ave', 'thomas001', 'a1234'),
+VALUES (1, 3, 'John Tan', 'john@gmail.com', '604 Sembawang Rd', 'john001', 'a1234'),
+VALUES (1, 3, 'Sally Lim', 'sally@gmail.com', '301 Yishun Ave 2', 'sally001', 'password');
+
+INSERT INTO Leave_Reason (reason) 
+VALUES ('Annual Leave'), ('Emergency Leave'), ('Others');
+
+INSERT INTO Leave_ (Staff_id, LR_id, date_requested, start_date, end_date, status) 
+VALUES (3, 1, '2022-03-15 13:23:44', '2022-03-02 13:23:44', '2022-03-05 13:23:44', 'Approved'),
+VALUES (3, 1, '2022-03-15 13:23:44', '2022-03-02 13:23:44', '2022-03-05 13:23:44', 'Pending'),
+VALUES (3, 1, '2022-03-15 13:23:44', '2022-03-02 13:23:44', '2022-03-05 13:23:44', 'Rejected');
