@@ -149,7 +149,6 @@ module.exports = function(app) {
       // execute sql query
       db.query(sqlquery, temprecord, (err, result) => {
           if (err) {
-            console.log(err);
             res.redirect("/addLeave");
           } 
           else {
@@ -193,6 +192,28 @@ module.exports = function(app) {
         }
       });
     }
+
+    else 
+      res.redirect("/login");
   });
+
+  app.post("/editLeave", function (req, res) {
+    if(req.session.username) {
+        let updateLeave = "UPDATE Leave_ SET LR_id = ?, start_date = ?, end_date = ? WHERE Leave_id = ?";
+        var leaveParam = [ req.body.requestreason, req.body.startdate, req.body.enddate, req.body.leaveid ]
+          
+        db.query(updateLeave, leaveParam, function(err, result) {
+          if (err) {
+            res.redirect("/allLeaves");
+          }
+          else {
+            res.redirect("/allLeaves");
+          }
+        })
+    }
+
+    else 
+      res.redirect("/login");
+  })
 
 }

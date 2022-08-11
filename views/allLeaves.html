@@ -23,7 +23,9 @@
     #t1 {
       font-family: Arial, Helvetica, sans-serif;
       border-collapse: collapse;
-      width: 100%;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     #t1 td, #t1 th {
@@ -105,7 +107,17 @@
         transition: margin-left .5s;
         padding: 16px;
     }
-  </style>
+
+    .button1:hover, .button1:active {
+      background-color: gray;
+      color: white;
+    }
+
+    a {
+      color: black;
+      text-decoration: none; /* no underline */
+    }
+  </style>  
 
   <title>All Leaves</title>
 </head>
@@ -124,8 +136,8 @@
     </div>
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
-        <h1> All Leaves </h1>
-        <br><a href="/addleave">Add Leave</a><br>
+        <h1> All Leaves </h1><br>
+        <button class="button1"><a href="/addleave">Add Leave</a></button><br>
 
         <table id="t1">
             <thead>
@@ -164,14 +176,21 @@
                       <td style="color: orange;"><b><%= leave.status %></b></td>
                     <% } %>
 
-                    <td><a href="/editLeave?id=<%= leave.Leave_id %>">
+                    <!-- Only pending appllication can be edited and deleted -->
+                    <% if (leave.status == 'Pending') {%>
+                      <td><a href="/editLeave?id=<%= leave.Leave_id %>">
                         edit
                     </a></td>
-            
+
                     <td><a href="/deleteLeave?id=<%= leave.Leave_id %>" 
-                        onclick="return confirm('Are you sure you want to delete?')">
-                        delete
-                    </a></td>
+                      onclick="return confirm('Are you sure you want to delete?')">
+                      delete
+                  </a></td>
+
+                  <% } else {%>
+                    <td>-</td>
+                    <td>-</td>
+                    <% } %>
 
                     <% }) %>
                 </tr>
