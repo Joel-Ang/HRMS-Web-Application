@@ -1,3 +1,6 @@
+-- pls add INSERT statement for the tables you are working on :) --
+
+
 INSERT INTO Department (name) 
 Values ('Sales'), ('Purchase'), ('Marketing'), ('Finance'), ('Human Resource'), ('Operations');
 
