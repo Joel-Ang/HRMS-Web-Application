@@ -100,10 +100,10 @@
         <% availableLeaves.forEach(function(leave){ %>
 
         <label> Request Date: </label>
-        <input type="text" name="requestdate" value="<%= leave.date_requested %>" readonly/><br /><br />
+        <input type="text" name="requestdate" value="<%= (leave.date_requested).getDate(); %>/<%= (leave.date_requested).getMonth() + 1; %>/<%= (leave.date_requested).getFullYear(); %>" readonly/><br /><br />
 
         <label>Reason for request: </label>
-        <% if (leave.reason == 1) {%>
+        <% if (leave.reason == 'Annual Leave') {%>
         <input type="radio" id="requestreason" name="requestreason" value="1" checked required/>
         <label for="Annual Leave">Annual Leave</label>
         <input type="radio" id="requestreason" name="requestreason" value="2" />
@@ -111,7 +111,7 @@
         <input type="radio" id="requestreason" name="requestreason" value="3" />
         <label for="Others">Others</label><br><br>
         
-        <% } else if (leave.reason == 2) {%>
+        <% } else if (leave.reason == 'Emergency Leave') {%>
           <input type="radio" id="requestreason" name="requestreason" value="1" required/>
           <label for="Annual Leave">Annual Leave</label>
           <input type="radio" id="requestreason" name="requestreason" value="2" checked />
@@ -139,10 +139,12 @@
           <input type="text" class="textbox" id="numdays2" name="numdays" readonly/>
         </div><br><br> 
 
+        <input type="hidden" id="leaveid" name="leaveid" value="<%= leave.Leave_id %>">
+
 
         <input type="submit" value="Update" />
-        <input type="submit" value="Save as draft" /><br><br>
-        
+        <!-- <input type="submit" value="Save as draft" /> -->
+        <br><br>
         <!-- Available leaves to apply as of today: - -->
         <% }) %>
       </form>
