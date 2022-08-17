@@ -1,4 +1,4 @@
-<!DOCTYPE html>    
+﻿<!DOCTYPE html>    
 <html>    
 <head>    
 <meta name="viewport" content="width=device-width, initial-scale=1">    
@@ -89,49 +89,131 @@ input[type=submit]:hover {
   content: "";    
   display: table;    
   clear: both;    
-}    
-    
+}
+.sidepanel {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidepanel a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidepanel a:hover {
+    color: #f1f1f1;
+}
+
+.sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+}
+
+.sidepanel .logout {
+    background-color: mediumspringgreen;
+    color: black;
+    position: absolute;
+    bottom: 60px;
+    width: 210px;
+}
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+fieldset {
+    border: 3px solid #000000;
+    width: 60%;
+    margin: auto;
+}
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */    
 </style>    
 </head>    
-<body>    
-    
-<div class="container">
-<h1>Feedback Form</h1>
-  <form>
-    <div class="col-name">    
-      <div class="col-25">    
-        <label for="fname"><h2>Name</h2></label>
-      </div>   
-    </div>  
-    
-    <div class="col-email">    
-        <div class="col-25">    
-          <label for="email"><h2>Email</h2></label>    
-        </div>  
-      </div>
-      
-      <div class="col-40">
-      <input type="text" id="fname" name="firstname" placeholder="Your name..">    
-      </div>
-       <div class="col-10">
-      </div>
-       <div class="col-40"> 
-      <input type="email" id="email" name="emailid" placeholder="Your Email..">      
-      </div>
-    <div class="row">    
-      <div class="col-25">    
-        <label for="feed_back"><h2>Feedback</h2></label>    
-      </div>    
-      <div class="col-75">
-      </div>
-        <textarea id="subject" name="subject" placeholder="Input feedback here.." style="height:200px"></textarea>    
-      </div>
-    <div class="row">    
-      <input type="submit" value="Submit">    
-    </div>    
-  </form>    
-</div>    
-    
+<body>
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="/">Home</a>
+        <a href="/allleaves">Leave</a>
+        <% if (session.roleid == 1 ){%>
+        <a href="/register">Register</a>
+        <%}%>
+        <a href="/logout" id="logout" class="logout">Logout</a>
+    </div>
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
+
+        <div class="container">
+            <h1>Feedback Form</h1>
+            <form method="POST" action="/feedback_submitted">
+                <div class="col-name">
+                    <div class="col-25">
+                        <label for="fname"><h2>Name</h2></label>
+                    </div>
+                </div>
+
+                <div class="col-email">
+                    <div class="col-25">
+                        <label for="email"><h2>Email</h2></label>
+                    </div>
+                </div>
+
+                <div class="col-40">
+                    <input type="text" id="name" name="name" placeholder="Your name.." required="required">
+                </div>
+                <div class="col-10">
+                </div>
+                <div class="col-40">
+                    <input type="email" id="email" name="email" placeholder="Your Email.." required="required">
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="feed_back"><h2>Feedback</h2></label>
+                    </div>
+                    <div class="col-75">
+                    </div>
+                    <textarea type="text" id="feedback" name="feedback" placeholder="Input feedback here.." style="height:200px" required="required"></textarea>
+                </div>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
 </body>    
+<script>
+    function openNav() {
+        document.getElementById("mySidepanel").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px"
+    }
+
+    function closeNav() {
+        document.getElementById("mySidepanel").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+</script>
 </html>

@@ -194,5 +194,22 @@ module.exports = function(app) {
       });
     }
   });
+    app.get("/feedback", function (req, res) {
+        if (req.session.username)
+            res.render("feedback.html");
+        else
+            res.render("login.html");
 
+    });
+    app.post("/feedback_submitted", function (req, res) {
+        // saving data in database
+        let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
+        let newrecord = [req.body.name, req.body.email, req.body.feedback];
+        db.query(sqlquery, newrecord, (err, result) => {
+            if (err) res.redirect("/");
+            else {
+                res.send("feedback has been submitted");
+            }
+        });
+    });
 }
