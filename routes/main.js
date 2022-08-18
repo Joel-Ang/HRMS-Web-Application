@@ -284,9 +284,6 @@ module.exports = function(app) {
         }
 
     });
-      });
-    }
-  });
     app.get("/feedback", function (req, res) {
         if (req.session.username)
             res.render("feedback.html");
@@ -305,7 +302,6 @@ module.exports = function(app) {
             }
         });
     });
-}
     app.post("/newClaims", function (req, res) {
         const dateOfClaim = req.body.date + " 00:00:00";
 
@@ -326,7 +322,7 @@ module.exports = function(app) {
         if (req.body.newClaimButtons == "Save as Draft") {
             values = [req.body.claimType, req.body.staffID, fullDate, req.body.claimAmount, dateOfClaim, "Saved As Draft"];
         }
-        if (req.body.newClaimButtons == "Cancel"){
+        if (req.body.newClaimButtons == "Cancel") {
             res.redirect("/allClaims");
             return;
         }
@@ -340,6 +336,7 @@ module.exports = function(app) {
                 res.redirect("/allClaims");
             }
         });
-        
+
     });
 }
+    
