@@ -79,15 +79,17 @@
  
  <body>
     <!--Side Panel div-->
-    <div id="mySidepanel" class="sidepanel">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="/">Home</a>
-      <a href="/allleaves">Leave</a>
-      <% if (session.roleid == 1 ){%>
-      <a href="/register">Register</a>
-      <%}%>
-      <a href="/logout" id="logout" class="logout">Logout</a>
-    </div>
+     <div id="mySidepanel" class="sidepanel">
+         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+         <a href="/">Home</a>
+         <a href="/allleaves">Leave</a>
+         <a href="/allclaims">Claims</a>
+         <a href="/feedback">Feedback</a>
+         <% if (session.roleid == 1 ){%>
+         <a href="/register">Register</a>
+         <%}%>
+         <a href="/logout" id="logout" class="logout">Logout</a>
+     </div>
 
     <!--Main content div-->
     <div id="main">
@@ -114,10 +116,10 @@
         <label for="Others">Others</label><br><br>
 
         <label for="startdate">Start Date: </label>
-        <input type="date" name="startdate" id="startdate" onchange="numofdays()">
+        <input type="date" name="startdate" id="startdate">
         &nbsp;&nbsp;
         <label for="enddate">End Date: </label>
-        <input type="date" name="enddate" id="enddate" onchange="numofdays()"><br><br> 
+        <input type="date" name="enddate" id="enddate"><br><br> 
         
         <div id="numdays">
           <label class="form">Expected no. of days:</label>
@@ -143,7 +145,7 @@
       var start = new Date(document.getElementById("startdate").value);
       var end = new Date(document.getElementById("enddate").value);
 
-      return parseInt((end - start) / (24 * 3600 * 1000));
+      return parseInt((end - start) / (24 * 3600 * 1000))+1;
     }
 
     // set the value of numdays field
@@ -161,7 +163,17 @@
     function closeNav() {
         document.getElementById("mySidepanel").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
-    }
+      }
+
+     document.getElementById("startdate").onchange = function () {
+         document.getElementById("enddate").setAttribute("min", this.value);
+         numofdays();
+     }
+
+     document.getElementById("enddate").onchange = function () {
+         document.getElementById("startdate").setAttribute("max", this.value);
+         numofdays();
+      }
 </script>
  </body>
 </html>
