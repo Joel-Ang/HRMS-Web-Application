@@ -126,13 +126,14 @@
                     <% availableClaims.forEach(function(claim){ %>
                     <tr>
                         <td style="display:none;"><input value=<%= claim.claim_id %> name="claimid" type="text" /></td>
-                        <td><input class="checkme" type="checkbox" id="checkbox" name="checkbox" /></td>
+                        <td><input class="checkme" type="checkbox" value="<%= claim.claim_id %>" name="checkbox" /></td>
                         <td><%= claim.date_submitted %></td>
                         <td><%= claim.date_of_claim %></td>
                         <td><%= claim.type %></td>
                         <td>$<%= claim.claim_amount %></td>
                         <td><%= claim.status %></td>
                         <% }) %>
+                        <td hidden="hidden"> <input class="checkme" type="checkbox" value="" checked="checked" name="checkbox" /></td>
                     </tr>
                 </tbody>
             </table><br />

@@ -275,13 +275,27 @@ module.exports = function(app) {
         }
         else if (buttonValue == 'Edit Claim') {
             //res.render('editClaim.html');
+            console.log(req.body.checkbox);
         }
         else if (buttonValue == 'Delete Claim') {
-
+            //Get all checked checkboxes
+            let claimsid = req.body.checkbox;
+            let sqlquery = "DELETE FROM Claim WHERE Claim_id = ? and Staff_id = ? " 
+            //Loop Through claimsid to delete selected claims
+            for (let i in claimsid) {
+                let newrecord = [claimsid[parseInt(i)], req.session.staffid];
+                db.query(sqlquery, newrecord, (err, result) => {
+                    if (err) {
+                        res.redirect("/");
+                    }
+                });
+            }
+            res.redirect("/allClaims");
+            
         }
         else {
-            res.render("allClaims.html");
-        }
+            res.redirect("/allClaims");
+        }   
 
     });
     app.get("/feedback", function (req, res) {

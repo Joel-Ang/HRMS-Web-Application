@@ -20,3 +20,12 @@ INSERT INTO Leave_ (Staff_id, LR_id, date_requested, start_date, end_date, statu
 VALUES (3, 1, '2022-03-15 13:23:44', '2022-03-02 13:23:44', '2022-03-05 13:23:44', 'Approved'),
 VALUES (3, 1, '2022-03-15 13:23:44', '2022-03-02 13:23:44', '2022-03-05 13:23:44', 'Pending'),
 VALUES (3, 1, '2022-03-15 13:23:44', '2022-03-02 13:23:44', '2022-03-05 13:23:44', 'Rejected');
+
+INSERT INTO Claim_Type (type) 
+VALUES ('Dental Claim', 'Taxi Claim','Medical Claim');
+
+INSERT INTO CLAIM (CT_id, Staff_id, date_submitted, claim_amount, date_of_claim, status)
+VALUES (1,3,'2022-08-20 00:00:00', 22.30, '2022-08-10 00:00:00', 'Approved'),
+VALUES (2,3,'2022-08-20 00:00:00', 22.30, '2022-08-10 00:00:00', 'Pending Approval'),
+VALUES (3,3,'2022-08-20 00:00:00', 22.30, '2022-08-10 00:00:00', 'Rejected'),
+VALUES (1,3,'2022-08-20 00:00:00', 22.30, '2022-08-10 00:00:00', 'Saved as Draft');
