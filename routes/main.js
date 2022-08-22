@@ -285,34 +285,22 @@ module.exports = function(app) {
 
     });
     app.get("/feedback", function (req, res) {
-
-        if (req.session.username){
-            let sqlquery = "Select * FROM staff WHERE Staff_id = ?"
-            let staffid = [req.session.staffid];
-            
-            db.query(sqlquery, staffid, (err, result) => {
-                if (err) {
-                    res.redirect("/");
-                }
-                else
-                    res.render("feedback.html", { staffDetails: result});
-            });
-        }
+        if (req.session.username)
+            res.render("feedback.html");
         else
             res.render("login.html");
 
     });
-
     app.post("/feedback_submitted", function (req, res) {
         // saving data in database
-            let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
-            let newrecord = [req.body.name, req.body.email, req.body.feedback];
-            db.query(sqlquery, newrecord, (err, result) => {
-                if (err) res.redirect("/");
-                else {
-                    res.render("feedback.html", { text:"hi"});
-                }
-            });
+        let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
+        let newrecord = [req.body.name, req.body.email, req.body.feedback];
+        db.query(sqlquery, newrecord, (err, result) => {
+            if (err) res.redirect("/");
+            else {
+                res.send("feedback has been submitted");
+            }
+        });
     });
     app.post("/newClaims", function (req, res) {
         const dateOfClaim = req.body.date + " 00:00:00";
