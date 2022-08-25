@@ -19,6 +19,7 @@ module.exports = function(app) {
     });
 
     app.post('/login', (req, res) => {
+        
         //Check if there is staff with same username and password in database
         let sqlquery = "SELECT * FROM staff WHERE username = ? AND password = ?";
         let record = [req.body.E_id, req.body.password];
@@ -253,29 +254,40 @@ module.exports = function(app) {
 
     app.post("/allClaims", function (req, res) {
         let buttonValue = req.body.claimButtons;
-        if (buttonValue == 'New Claim') {
+        if (buttonValue == 'New Claim' || buttonValue == 'Edit Claim') {
             let sqlquery = "SELECT Staff.Staff_id, Staff.Staff_name, Department.Department_name " +
                 " From Staff" +
                 " Join Department ON Staff.Dept_id = Department.Dept_id";
             // + " WHERE Staff_id = ?";
             db.query(sqlquery, (err, staffDetail) => {
-                if (err) res.redirect("/");
+                if (err) res.redirect("/allClaims");
                 else {
                     let sqlclaimquery = "Select * from Claim_type";
                     db.query(sqlclaimquery, (err, claimType) => {
-                        if (err) res.redirect("/");
+                        if (err) res.redirect("/allClaims");
                         else {
-                            console.log(claimType[0]);
-                            res.render('newClaim.html', { staffDetails: staffDetail, claimTypes: claimType });
+                            if (buttonValue == 'New Claim') {
+                                res.render('newClaim.html', { staffDetails: staffDetail, claimTypes: claimType });
+                            }
+                            if (buttonValue == 'Edit Claim') {
+                                let sqlclaimdetailquery = "SELECT Claim.claim_id, DATE_FORMAT(Claim.date_of_claim, '%Y-%m-%d') AS date_of_claim, Claim.CT_id, Claim.claim_amount " +
+                                                          "FROM Claim " + 
+                                                          "WHERE Claim.claim_id = ?";
+                                let claimsid = [req.body.checkbox[0]];
+                                db.query(sqlclaimdetailquery, claimsid, (err, claimDetail,) => {
+                                    if (err) {
+                                        console.log(err); res.redirect("/allClaims");
+                                    }
+                                    else {
+                                        res.render('editClaim.html', { staffDetails: staffDetail, claimTypes: claimType, claimDetails: claimDetail })
+                                    }
+                                });
+                                
+                            }
                         }
                     });
-
                 }
             });
-        }
-        else if (buttonValue == 'Edit Claim') {
-            //res.render('editClaim.html');
-            console.log(req.body.checkbox);
         }
         else if (buttonValue == 'Delete Claim') {
             //Get all checked checkboxes
@@ -298,6 +310,44 @@ module.exports = function(app) {
         }   
 
     });
+
+    app.post("/editClaims", function (req, res) {
+        const dateOfClaim = req.body.date + " 00:00:00";
+
+        let date_ob = new Date();
+        let date = date_ob.getDate();
+        let month = date_ob.getMonth() + 1;
+        let year = date_ob.getFullYear();
+        let fullDate = year + "-" + month + "-" + date + " 00:00:00";
+        // prints date & time in YYYY-MM-DD format
+        console.log(fullDate);
+        let values;
+        console.log(req.body.newClaimButtons);
+        let sqlquery = "UPDATE Claim SET CT_id = ?, date_submitted = ?, claim_amount = ?, date_of_claim = ?, status = ? " +
+                       "WHERE claim_id = ?";
+
+        if (req.body.newClaimButtons == "Submit Claim") {
+            values = [req.body.claimType, fullDate, req.body.claimAmount, dateOfClaim, "Pending Approval", req.body.claim_id];
+        }
+        if (req.body.newClaimButtons == "Save as Draft") {
+            values = [req.body.claimType, req.body.staffID, fullDate, req.body.claimAmount, dateOfClaim, "Saved As Draft", req.body.claim_id];
+        }
+        if (req.body.newClaimButtons == "Cancel") {
+            res.redirect("/allClaims");
+            return;
+        }
+        console.log(values);
+        db.query(sqlquery, values, (err, result) => {
+            if (err) {
+                res.redirect("/");
+                console.log(err);
+            }
+            else {
+                res.redirect("/allClaims");
+            }
+        });
+    });
+
     app.get("/feedback", function (req, res) {
         if (req.session.username)
             res.render("feedback.html");

@@ -4,8 +4,8 @@
     <title>New Claim</title>
 </head>
 <body>
-    <h1> New Claim </h1>
-    <form  method="POST" action="/newClaims">
+    <h1> Edit Claim </h1>
+    <form  method="POST" action="/editClaims">
         <label>Staff ID: </label> </br>
         <input id="staffID" name="staffID" type="text" value=<%= staffDetails[0].Staff_id %> disabled> </br>
         <label>Name: </label> </br>
@@ -13,20 +13,24 @@
         <label>Department: </label> </br>
         <input id="dept" name="dept" type="text" value=<%= staffDetails[0].Department_name %> disabled> </br>
         <label>Claim Date: </label> </br>
-        <input id="date" name="date" type="date"> </br>
+        <input id="date" name="date" type="date" value=<%= claimDetails[0].date_of_claim %> </br>
         <label>Claim Type: </label> </br>
         <select id="claimType" name="claimType">
             <option value="">Select A Claim Type</option>
             <% claimTypes.forEach(function(types){ %>
-            <option value=<%= types.CT_id %>><%= types.type %></option>
+                <% if (types.CT_id == claimDetails[0].CT_id) {%>
+                    <option selected="selected" value=<%= types.CT_id %>><%= types.type %></option>
+                <% } else { %>
+                    <option value=<%= types.CT_id %>><%= types.type %></option>
+                <% } %>
             <% }) %>
         </select> </br>
         <label>Claim Amount: </label> </br>
-        <span>$ <input type="number" id="claimAmount" name="claimAmount" step=0.01></span></br>
+        <span>$ <input type="number" id="claimAmount" name="claimAmount" step=0.01 value=<%= claimDetails[0].claim_amount %> ></span></br>
         <!--<label>Upload Receipt: </label><input type="file"> </br>-->
         <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Submit Claim">
-        <input onclick="removeDisable()"type="submit" name="newClaimButtons" value="Save as Draft">
-        <input onclick="removeDisable()"type="submit" name="newClaimButtons" value="Cancel">
+        <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Save as Draft">
+        <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Cancel">
 
     </form>
     <script>
