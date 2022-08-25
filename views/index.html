@@ -1,100 +1,186 @@
-﻿<!doctype html>
+﻿<!-- HOMEPAGE -->
+
+<!DOCTYPE html>
 <html>
 <head>
+    <meta name = "viewport" content ="width=device-width", initial scale="1.0">
+    <link rel ="stylesheet" href ="style.css">
+
     <style>
-        body {
-            font-family: "Lato", sans-serif;
+      body {
+        font-family: "Lato", sans-serif;
+      }
+      h1 {
+        display: inline-block;
+        align-content: center;
+        margin-left: 42%;
+      }
+      .sidepanel {
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+      .sidepanel a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+      .sidepanel a:hover {
+        color: #f1f1f1;
+      }
+      .sidepanel .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+      }
+      .sidepanel .logout {
+        background-color: mediumspringgreen;
+        color: black;
+        position: absolute;
+        bottom: 60px;
+        width: 210px; 
+      }
+      .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+      }
+      .openbtn:hover {
+        background-color: #444;
+      }
+      #main {
+        transition: margin-left .5s;
+        padding: 16px;
+      }
+        *
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Verdana, sans-serif; 
         }
-        h1 {
-            display: inline-block;
-            align-content: center;
-            margin-left: 42%;
+
+        .container
+        {
+            width: 100%;
+            height: 100vh;
+            background: url("images/boywithdog.png");
+            background-size: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+
         }
-        .sidepanel {
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-        .sidepanel a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .sidepanel a:hover {
-            color: #f1f1f1;
-        }
-        .sidepanel .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-        }
-        .sidepanel .logout {
-            background-color: mediumspringgreen;
-            color: black;
-            position: absolute;
-            bottom: 60px;
-            width: 210px; 
-        }
-        .openbtn {
-            font-size: 20px;
+
+        .btn
+        {
+            padding: 10px 60px;
+            background: #ffff;
+            border: 0;
+            outline: none;
             cursor: pointer;
-            background-color: #111;
-            color: white;
-            padding: 10px 15px;
-            border: none;
+            font-size: 22px;
+            font-weight: 500;
+            border-radius: 30px;
         }
-        .openbtn:hover {
-            background-color: #444;
+
+        .popup
+        {
+            width: 400px;
+            background: #ffff;
+            border-radius: 6px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 0 30px 30px;
+            color: #333;
+
         }
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
+
+        .popup img
+        {
+            width: 100px;
+            margin-top: -50px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+
+        .fill
+        {
+            max-width: 99%;
+            max-height: 99%;
+        }
+
     </style>
-
-    <title>This is the title of the webpage!</title>
+    <title>Home Page</title>
 </head>
- <body>
-     <!--Side Panel div-->
-     <div id="mySidepanel" class="sidepanel">
-         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-         <a href="/">Home</a>
-         <a href="/allleaves">Leave</a>
-         <a href="/allclaims">Claims</a>
-         <a href="/feedback">Feedback</a>
-         <% if (session.roleid == 1 ){%>
-         <a href="/register">Register</a>
-         <%}%>
-         <a href="/logout" id="logout" class="logout">Logout</a>
-     </div>
 
-     <!--Main content div-->
-     <div id="main">
-         <button class="openbtn" onclick="openNav()">☰</button>
-         <h1> Home Page </h1>
-     </div>
+<body>  
+    <!--Side Panel div-->
+    <div id="mySidepanel" class="sidepanel">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a href="/">Home</a>
+      <a href="/allleaves">Leave</a>
+      <a href="/allclaims">Claims</a>
+      <a href="/feedback">Feedback</a>
+      <% if (session.roleid == 1 ){%>
+      <a href="/register">Register</a>
+      <%}%>
+      <a href="/logout" id="logout" class="logout">Logout</a>
+    </div>
 
-     <script>
-         function openNav() {
-             document.getElementById("mySidepanel").style.width = "250px";
-             document.getElementById("main").style.marginLeft = "250px"
-         }
+    <!--Main content div-->
+    <div id="main">
+      <button class="openbtn" onclick="openNav()">☰</button>
 
-         function closeNav() {
-             document.getElementById("mySidepanel").style.width = "0";
-             document.getElementById("main").style.marginLeft = "0";
-         }
-     </script>
- </body>
+      <div class = "container">
+        <% results.forEach(function(result){ %>
+
+        <!-- <button type = "submit" class = "btn">Delete</button> -->
+        <div class = "popup">
+            <img class = "fill" src = "/images/tick.png" width="100%" height="100%">
+            <h2>Good Morning, <%= result.Staff_name %>!</h2>
+            <p>Username: <%= result.username %></p>
+            <p>Time Login: </p>
+            <button type = "button" id = "myButton1">Company Website</button>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  
+
+  <script type="text/javascript">
+    document.getElementById("myButton1").onclick = function () {
+        location.href = "https://www.sim.edu.sg/";
+    };
+
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px"
+    }
+
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+  </script>
+
+</body>
 </html>

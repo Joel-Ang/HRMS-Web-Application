@@ -4,11 +4,29 @@ const e = require("express");
 module.exports = function(app) {
     
     app.get("/",function(req, res) {
+      // Use this if else statement to check if user is still logged in 
+      if (req.session.username) {
+        // select username and name
+        let sqlquery = "SELECT Staff_name, username FROM Staff WHERE username = ?";
+
+        db.query(sqlquery, req.session.username, (err, result) => {
+          if (err) {
+            res.redirect("/");               
+          }
+          else {
+            res.render("index.html", { results: result });
+          }
+        });
+      }
+      else
+        res.redirect("/login");
+
+
         //Use this if else statement to check if user is still logged in 
-        if (req.session.username)
-            res.render("index.html");
-        else
-            res.redirect("/login");
+        // if (req.session.username)
+        //     res.render("index.html");
+        // else
+        //     res.redirect("/login");
     }); 
 
     app.get("/login", function (req, res) {
@@ -349,12 +367,24 @@ module.exports = function(app) {
     });
 
     app.get("/feedback", function (req, res) {
-        if (req.session.username)
-            res.render("feedback.html");
+
+        if (req.session.username) {
+            let sqlquery = "Select * FROM staff WHERE Staff_id = ?"
+            let staffid = [req.session.staffid];
+
+            db.query(sqlquery, staffid, (err, result) => {
+                if (err) {
+                    res.redirect("/");
+                }
+                else
+                    res.render("feedback.html", { staffDetails: result });
+            });
+        }
         else
             res.render("login.html");
 
     });
+
     app.post("/feedback_submitted", function (req, res) {
         // saving data in database
         let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
@@ -362,7 +392,7 @@ module.exports = function(app) {
         db.query(sqlquery, newrecord, (err, result) => {
             if (err) res.redirect("/");
             else {
-                res.send("feedback has been submitted");
+                res.render("feedback.html", { text: "hi" });
             }
         });
     });
