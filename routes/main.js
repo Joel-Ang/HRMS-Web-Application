@@ -14,7 +14,8 @@ module.exports = function(app) {
             res.redirect("/");               
           }
           else {
-            res.render("index.html", { results: result });
+              //loginTime.setDate(loginTime.getDate() - 1);
+              res.render("index.html", { results: result});
           }
         });
       }
@@ -56,6 +57,7 @@ module.exports = function(app) {
                     session.username = req.body.E_id;
                     session.roleid = result[0].Role_id;
                     session.staffid = result[0].Staff_id;
+                    session.loginTime = new Date();
                     res.redirect("/");
                 }
                 else {
