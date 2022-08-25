@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1> Edit Claim </h1>
-    <form  method="POST" action="/editClaims">
+    <form method="POST" action="/editClaims">
         <label>Staff ID: </label> </br>
         <input id="staffID" name="staffID" type="text" value=<%= staffDetails[0].Staff_id %> disabled> </br>
         <label>Name: </label> </br>
@@ -18,11 +18,11 @@
         <select id="claimType" name="claimType">
             <option value="">Select A Claim Type</option>
             <% claimTypes.forEach(function(types){ %>
-                <% if (types.CT_id == claimDetails[0].CT_id) {%>
-                    <option selected="selected" value=<%= types.CT_id %>><%= types.type %></option>
-                <% } else { %>
-                    <option value=<%= types.CT_id %>><%= types.type %></option>
-                <% } %>
+            <% if (types.CT_id == claimDetails[0].CT_id) {%>
+            <option selected="selected" value=<%= types.CT_id %>><%= types.type %></option>
+            <% } else { %>
+            <option value=<%= types.CT_id %>><%= types.type %></option>
+            <% } %>
             <% }) %>
         </select> </br>
         <label>Claim Amount: </label> </br>
@@ -31,7 +31,7 @@
         <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Submit Claim">
         <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Save as Draft">
         <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Cancel">
-
+        <input hidden="hidden" type="text" value=<%= claimDetails[0].claim_id %> id="claim_id" name="claim_id" >
     </form>
     <script>
         function removeDisable() {
