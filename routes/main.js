@@ -21,13 +21,6 @@ module.exports = function(app) {
       }
       else
         res.redirect("/login");
-
-
-        //Use this if else statement to check if user is still logged in 
-        // if (req.session.username)
-        //     res.render("index.html");
-        // else
-        //     res.redirect("/login");
     }); 
 
     app.get("/login", function (req, res) {
@@ -40,7 +33,7 @@ module.exports = function(app) {
     app.post('/login', (req, res) => {
         
         //Check if there is staff with same username and password in database
-        let sqlquery = "SELECT * FROM staff WHERE username = ? AND password = ?";
+        let sqlquery = "SELECT * FROM Staff WHERE username = ? AND password = ?";
         let record = [req.body.E_id, req.body.password];
         db.query(sqlquery, record, (err, result) => {
             if (err) {
@@ -163,19 +156,25 @@ module.exports = function(app) {
     if (req.session.username) {
         // set request date to today's date
         const requestdate = new Date();
-      
+        
+        var statusVal;
+        if (req.body.newLeaveBtn == 'Submit') statusVal = 'Pending';
+        else if (req.body.newLeaveBtn == 'Save as draft') statusVal = 'Saved as Draft';
+
         let sqlquery = "INSERT INTO Leave_ (Staff_id, LR_id, date_requested, start_date, end_date, status)" +
-                        " VALUES (?,?,?,?,?,'Pending')";
-        let temprecord = [session.roleid, req.body.requestreason, requestdate, req.body.startdate, req.body.enddate]
+                        " VALUES (?,?,?,?,?,?)";
+        let temprecord = [session.roleid, req.body.requestreason, requestdate, req.body.startdate, req.body.enddate, statusVal]
 
         // execute sql query
         db.query(sqlquery, temprecord, (err, result) => {
-            if (err) {
-            res.redirect("/addLeave");
-            } 
-            else {
-            res.redirect("/allLeaves");
-            }
+          (err) ? res.redirect("/addLeave") : res.redirect("/allLeaves");
+          
+          // if (err) {
+          //     res.redirect("/addLeave");
+          //   } 
+          //   else {
+          //     res.redirect("/allLeaves");
+          //   }
         });
     }
 

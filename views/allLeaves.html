@@ -146,8 +146,8 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Name of Applicant</th>
-                    <th>Department</th>
+                    <!-- <th>Name of Applicant</th>
+                    <th>Department</th> -->
                     <th>Reason</th>
                     <th>Date of Request</th>
                     <th>Start Date</th>
@@ -162,25 +162,28 @@
               <% availableLeaves.forEach(function(leave){ %>
                 <tr>
                     <td></td>
-                    <td><%= leave.Staff_name %></td>
-                    <td><%= leave.Department_name %></td>
+                    <!-- <td><%= leave.Staff_name %></td>
+                    <td><%= leave.Department_name %></td> -->
                     <td><%= leave.reason %></td>
                     <td><%= (leave.date_requested).getDate(); %>/<%= (leave.date_requested).getMonth() + 1; %>/<%= (leave.date_requested).getFullYear(); %></td>
                     <td><%= (leave.start_date).getDate(); %>/<%= (leave.start_date).getMonth() + 1; %>/<%= (leave.start_date).getFullYear(); %></td>
                     <td><%= (leave.end_date).getDate(); %>/<%= (leave.end_date).getMonth() + 1 ;%>/<%= (leave.end_date).getFullYear(); %></td>
                     
                     <% if (leave.status == 'Approved') {%>
-                      <td style="color: green;"><b><%= leave.status %></b></td>
+                        <td style="color: green;"><b><%= leave.status %></b></td>
                     
                     <% } else if (leave.status == 'Rejected') {%>
-                      <td style="color: red;"><b><%= leave.status %></b></td>
+                        <td style="color: red;"><b><%= leave.status %></b></td>
+
+                    <% } else if (leave.status == 'Saved as Draft') {%>
+                        <td style="color: rgb(97, 97, 97);"><b><%= leave.status %></b></td>
 
                     <% } else {%>
-                      <td style="color: orange;"><b><%= leave.status %></b></td>
+                        <td style="color: orange;"><b><%= leave.status %></b></td>
                     <% } %>
 
                     <!-- Only pending appllication can be edited and deleted -->
-                    <% if (leave.status == 'Pending') {%>
+                    <% if (leave.status == 'Pending' || leave.status == 'Saved as Draft') {%>
                       <td><a href="/editLeave?id=<%= leave.Leave_id %>">
                         edit
                     </a></td>

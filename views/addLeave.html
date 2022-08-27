@@ -106,7 +106,7 @@
         <% }) %>
 
         <label> Request Date: </label>
-        <input type="text" name="requestdate" id="requestdate" value="<%= session.username %>" readonly/><br /><br />
+        <input type="text" name="requestdate" id="requestdate" readonly/><br /><br />
 
         <label>Reason for request: </label>
         <input type="radio" id="requestreason" name="requestreason" value="1" required/>
@@ -117,10 +117,10 @@
         <label for="Others">Others</label><br><br>
 
         <label for="startdate">Start Date: </label>
-        <input type="date" name="startdate" id="startdate">
+        <input type="date" name="startdate" id="startdate" required>
         &nbsp;&nbsp;
         <label for="enddate">End Date: </label>
-        <input type="date" name="enddate" id="enddate"><br><br> 
+        <input type="date" name="enddate" id="enddate" required><br><br> 
         
         <div id="numdays">
           <label class="form">Expected no. of days:</label>
@@ -128,10 +128,10 @@
         </div><br><br> 
 
 
-        <input type="submit" value="Submit" />
-        <input type="submit" value="Save as draft" /><br><br>
-        
-        <!-- Available leaves to apply as of today: - -->
+        <input type="submit" name="newLeaveBtn" value="Submit" />
+        <input type="submit" name="newLeaveBtn" value="Save as draft" />
+        <button onclick="history.back()">Cancel</button>
+        <br><br>
         
       </form>
     </fieldset>
