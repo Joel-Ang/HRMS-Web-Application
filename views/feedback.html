@@ -1,30 +1,228 @@
-﻿    app.get("/feedback", function (req, res) {
-
-        if (req.session.username) {
-            let sqlquery = "Select * FROM staff WHERE Staff_id = ?"
-            let staffid = [req.session.staffid];
-
-            db.query(sqlquery, staffid, (err, result) => {
-                if (err) {
-                    res.redirect("/");
-                }
-                else
-                    res.render("feedback.html", { staffDetails: result });
-            });
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
         }
-        else
-            res.render("login.html");
 
-    });
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgb(70, 68, 68);
+            border-radius: 4px;
+            resize: vertical;
+        }
 
-    app.post("/feedback_submitted", function (req, res) {
-        // saving data in database
-        let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
-        let newrecord = [req.body.name, req.body.email, req.body.feedback];
-        db.query(sqlquery, newrecord, (err, result) => {
-            if (err) res.redirect("/");
-            else {
-                res.render("feedback.html", { text: "hi" });
+        input[type=email], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgb(70, 68, 68);
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background-color: rgb(180, 50, 50);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+            input[type=submit]:hover {
+                background-color: #DE8989;
             }
-        });
-    });
+
+        .container {
+            border-radius: 5px;
+            background-color: #EEC9C9;
+            padding: 20px;
+        }
+
+        .col-10 {
+            float: left;
+            width: 10%;
+            margin-top: 6px;
+        }
+
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+
+        .col-40 {
+            float: left;
+            width: 45%;
+            margin-top: 6px;
+        }
+
+        .col-50 {
+            float: left;
+            width: 50%;
+            margin-top: 6px;
+        }
+
+        .col-name {
+            float: left;
+            width: 55%;
+            margin-top: 6px;
+        }
+
+        .col-email {
+            float: left;
+            width: 45%;
+            margin-top: 6px;
+        }
+
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .sidepanel {
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidepanel a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidepanel a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+        }
+
+        .sidepanel .logout {
+            background-color: mediumspringgreen;
+            color: black;
+            position: absolute;
+            bottom: 60px;
+            width: 210px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    </style>
+    <title>Feedback Form</title>
+</head>
+<body>
+    <!--Side Panel div-->
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="/">Home</a>
+        <a href="/allleaves">Leave</a>
+        <a href="/allclaims">Claims</a>
+        <a href="/feedback">Feedback</a>
+        <% if (session.roleid == 1 ){%>
+        <a href="/register">Register</a>
+        <a href="/allFeedbacks">View feedbacks</a>
+        <%}%>
+        <a href="/logout" id="logout" class="logout">Logout</a>
+    </div>
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
+
+        <div class="container">
+            <h1>Feedback Form</h1>
+            <form method="POST" action="/feedback_submitted">
+                <div class="col-name">
+                    <div class="col-25">
+                        <label for="fname"><h2>Name</h2></label>
+                    </div>
+                </div>
+
+                <div class="col-email">
+                    <div class="col-25">
+                        <label for="email"><h2>Email</h2></label>
+                    </div>
+                </div>
+
+                <div class="col-40">
+                    <input type="text" id="name" name="name" value="<%= staffDetails[0].Staff_name %>" disabled>
+                </div>
+                <div class="col-10">
+                </div>
+                <div class="col-40">
+                    <input type="email" id="email" name="email" value="<%= staffDetails[0].email %>" disabled>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="feed_back"><h2>Feedback</h2></label>
+                    </div>
+                    <div class="col-75">
+                    </div>
+                    <textarea type="text" id="feedback" name="feedback" placeholder="Input feedback here.." style="height:200px" required="required"></textarea>
+                </div>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
+</body>
+<script>
+    function openNav() {
+        document.getElementById("mySidepanel").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px"
+    }
+
+    function closeNav() {
+        document.getElementById("mySidepanel").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+</script>
+</html>

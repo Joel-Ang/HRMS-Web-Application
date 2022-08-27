@@ -371,7 +371,7 @@ module.exports = function(app) {
     app.get("/feedback", function (req, res) {
 
         if (req.session.username) {
-            let sqlquery = "Select * FROM staff WHERE Staff_id = ?"
+            let sqlquery = "Select * FROM staff WHERE Staff_id = ?";
             let staffid = [req.session.staffid];
 
             db.query(sqlquery, staffid, (err, result) => {
@@ -398,6 +398,25 @@ module.exports = function(app) {
             }
         });
     });
+
+    app.get("/allFeedbacks", function (req, res) {
+
+        if (req.session.username) {
+            let sqlquery = "Select * FROM feedback";
+
+            db.query(sqlquery, (err, result) => {
+                if (err) {
+                    res.redirect("/");
+                }
+                else
+                    res.render("allFeedbacks.html", { allFeedbacks: result });
+            });
+        }
+        else
+            res.render("login.html");
+
+    });
+
     app.post("/newClaims", function (req, res) {
         const dateOfClaim = req.body.date + " 00:00:00";
 

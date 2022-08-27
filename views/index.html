@@ -132,55 +132,56 @@
     <title>Home Page</title>
 </head>
 
-<body>  
+<body>
     <!--Side Panel div-->
     <div id="mySidepanel" class="sidepanel">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <a href="/">Home</a>
-      <a href="/allleaves">Leave</a>
-      <a href="/allclaims">Claims</a>
-      <a href="/feedback">Feedback</a>
-      <% if (session.roleid == 1 ){%>
-      <a href="/register">Register</a>
-      <%}%>
-      <a href="/logout" id="logout" class="logout">Logout</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="/">Home</a>
+        <a href="/allleaves">Leave</a>
+        <a href="/allclaims">Claims</a>
+        <a href="/feedback">Feedback</a>
+        <% if (session.roleid == 1 ){%>
+        <a href="/register">Register</a>
+        <a href="/allFeedbacks">View feedbacks</a>
+        <%}%>
+        <a href="/logout" id="logout" class="logout">Logout</a>
     </div>
 
     <!--Main content div-->
     <div id="main">
-      <button class="openbtn" onclick="openNav()">☰</button>
+        <button class="openbtn" onclick="openNav()">☰</button>
 
-      <div class = "container">
-        <% results.forEach(function(result){ %>
+        <div class="container">
+            <% results.forEach(function(result){ %>
 
-        <!-- <button type = "submit" class = "btn">Delete</button> -->
-        <div class = "popup">
-            <img class = "fill" src = "/images/tick.png" width="100%" height="100%">
-            <h2>Good Morning, <%= result.Staff_name %>!</h2>
-            <p>Username: <%= result.username %></p>
-            <p id="loginTime">Time Login: <%= session.loginTime %></p>
-            <button type = "button" id = "myButton1">Company Website</button>
+            <!-- <button type = "submit" class = "btn">Delete</button> -->
+            <div class="popup">
+                <img class="fill" src="/images/tick.png" width="100%" height="100%">
+                <h2>Good Morning, <%= result.Staff_name %>!</h2>
+                <p>Username: <%= result.username %></p>
+                <p id="loginTime">Time Login: <%= session.loginTime %></p>
+                <button type="button" id="myButton1">Company Website</button>
+            </div>
+            <% }) %>
         </div>
-        <% }) %>
-      </div>
     </div>
-  
 
-  <script type="text/javascript">
-    document.getElementById("myButton1").onclick = function () {
-        location.href = "https://www.sim.edu.sg/";
-    };
 
-    function openNav() {
-      document.getElementById("mySidepanel").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px"
-    }
+    <script type="text/javascript">
+        document.getElementById("myButton1").onclick = function () {
+            location.href = "https://www.sim.edu.sg/";
+        };
 
-    function closeNav() {
-      document.getElementById("mySidepanel").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-    }
-  </script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px"
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
 
 </body>
 </html>
