@@ -1,187 +1,252 @@
-﻿<!-- HOMEPAGE -->
+<!-- HOMEPAGE -->
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset = "UTF-8">
     <meta name = "viewport" content ="width=device-width", initial scale="1.0">
+
+    <!-- css -->
     <link rel ="stylesheet" href ="style.css">
+  
+   
+    <title>Home Page</title>
 
     <style>
-      body {
-        font-family: "Lato", sans-serif;
+      
+      /* start of navigation bar */
+      
+      body 
+      {
+        font-family: Verdana, sans-serif; 
       }
-      h1 {
+      
+      
+      h1 
+      {
         display: inline-block;
         align-content: center;
         margin-left: 42%;
       }
-      .sidepanel {
+      
+      .sidepanel 
+      {
         width: 0;
         position: fixed;
         z-index: 1;
         height: 100%;
         top: 0;
         left: 0;
-        background-color: #111;
+        /* background-color: #111; */
+        background-color: white;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
       }
-      .sidepanel a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
+        
+      .sidepanel a 
+      {
+          padding: 8px 8px 8px 32px;
+          text-decoration: none;
+          font-size: 25px;
+          /* color: #818181; */
+          color: black;
+         /* color of the wording of home, leave, claims, feedback, register when panel first opens */
+          display: block;
+          transition: 0.3s;
       }
-      .sidepanel a:hover {
-        color: #f1f1f1;
+
+      .sidepanel a:hover 
+      {
+          /* color: #f1f1f1; */
+          color: rgba(0,0,0,0.4);
+       
+          /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
       }
-      .sidepanel .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
+
+      .sidepanel .closebtn 
+      {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
       }
-      .sidepanel .logout {
-        background-color: mediumspringgreen;
-        color: black;
-        position: absolute;
-        bottom: 60px;
-        width: 210px; 
+      
+      .sidepanel .logout 
+      {
+          background-color: pink;
+          color: black;
+          position: relative;
+          margin-bottom: 250px;
+          top: 30px;
+          width: 200px;
+          right: 20px; 
+          margin-left: 20px;
+          text-align: left;
+      
       }
-      .openbtn {
-        font-size: 20px;
-        cursor: pointer;
-        background-color: #111;
-        color: white;
-        padding: 10px 15px;
-        border: none;
+
+      .openbtn 
+      {
+          font-size: 20px;
+          cursor: pointer;
+          background-color: #111;
+          color: white;
+          padding: 10px 15px;
+          border: none;
       }
+
       .openbtn:hover {
         background-color: #444;
+      
       }
+
       #main {
         transition: margin-left .5s;
         padding: 16px;
       }
-        *
-        {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Verdana, sans-serif; 
-        }
 
-        .container
-        {
-            width: 100%;
-            height: 100vh;
-            background: url("images/boywithdog.png");
-            background-size: 60%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+      img
+      {
+        margin-left: 80px;
+      }
+
+      h3
+      {
+        margin-left: 40px;
+      }
 
 
-        }
+      /* end of navigation bar */
 
-        .btn
-        {
-            padding: 10px 60px;
-            background: #ffff;
-            border: 0;
-            outline: none;
-            cursor: pointer;
-            font-size: 22px;
-            font-weight: 500;
-            border-radius: 30px;
-        }
+      *
+      {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Verdana, sans-serif; 
+      }
 
-        .popup
-        {
-            width: 400px;
-            background: #ffff;
-            border-radius: 6px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            padding: 0 30px 30px;
-            color: #333;
+      .container
+      {
+          width: 100%;
+          height: 100vh;
+          background: url("public/images/avatar.png");
+          /* background-color: bisque; */
+          background-image: url("images/homepage.png");
+          background-size: 70%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-        }
 
-        .popup img
-        {
-            width: 100px;
-            margin-top: -50px;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
+      }
 
-        .fill
-        {
-            max-width: 99%;
-            max-height: 99%;
-        }
+      .btn
+      {
+          padding: 10px 60px;
+          background: #ffff;
+          border: 0;
+          outline: none;
+          cursor: pointer;
+          font-size: 22px;
+          font-weight: 500;
+          border-radius: 30px;
+      }
+
+      .popup
+      {
+          width: 400px;
+          background: #ffff;
+          border-radius: 6px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          padding: 0 30px 30px;
+          color: #333;
+
+      }
+
+      .popup img
+      {
+          width: 100px;
+          margin-top: -50px;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+          margin-right: 60px;
+      }
+
+      .fill
+      {
+          max-width: 99%;
+          max-height: 99%;
+      }
+
+ 
 
     </style>
-    <title>Home Page</title>
 </head>
 
-<body>
+<body>  
+
+
     <!--Side Panel div-->
     <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="/">Home</a>
-        <a href="/allleaves">Leave</a>
-        <a href="/allclaims">Claims</a>
-        <a href="/feedback">Feedback</a>
-        <% if (session.roleid == 1 ){%>
-        <a href="/register">Register</a>
-        <a href="/allFeedbacks">View feedbacks</a>
-        <%}%>
-        <a href="/logout" id="logout" class="logout">Logout</a>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <img src= "images/smurf.png">
+      <br> </br>
+      <h3>The Smurfy Gang<h3>
+        <br> </br>
+        <br> </br>
+   
+      <a href="/">Home</a>
+      <a href="/allleaves">Leave</a>
+      <a href="/allclaims">Claims</a>
+      <a href="/feedback">Feedback</a>
+      <% if (session.roleid == 1 ){%>
+      <a href="/register">Register</a>
+      <%}%>
+      <a href="/logout" id="logout" class="logout">Logout</a>
     </div>
 
     <!--Main content div-->
     <div id="main">
-        <button class="openbtn" onclick="openNav()">☰</button>
+      <button class="openbtn" onclick="openNav()">☰</button> 
 
-        <div class="container">
-            <% results.forEach(function(result){ %>
+      <div class = "container">
+        <% results.forEach(function(result){ %>
 
-            <!-- <button type = "submit" class = "btn">Delete</button> -->
-            <div class="popup">
-                <img class="fill" src="/images/tick.png" width="100%" height="100%">
-                <h2>Good Morning, <%= result.Staff_name %>!</h2>
-                <p>Username: <%= result.username %></p>
-                <p id="loginTime">Time Login: <%= session.loginTime %></p>
-                <button type="button" id="myButton1">Company Website</button>
-            </div>
-            <% }) %>
+        <!-- <button type = "submit" class = "btn">Delete</button> -->
+        <div class = "popup">
+            <img class = "fill" src = "images/avatar.png" width="100%" height="100%">
+            <h2>Welcome, <%= result.Staff_name %>!</h2>
+            <p>Username: <%= result.username %></p>
+            <p>Time Login: </p>
+            <br></br>
+            <button type = "button" id = "myButton1">Company Website</button>
         </div>
+        <% }) %>
+      </div>
     </div>
+  
 
+  <script type="text/javascript">
+    document.getElementById("myButton1").onclick = function () {
+        location.href = "https://www.sim.edu.sg/";
+    };
 
-    <script type="text/javascript">
-        document.getElementById("myButton1").onclick = function () {
-            location.href = "https://www.sim.edu.sg/";
-        };
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px"
+    }
 
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px"
-        }
-
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-        }
-    </script>
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+  </script>
 
 </body>
 </html>
