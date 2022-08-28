@@ -3,181 +3,107 @@
  
 <head>
   <style>
-
-      /* start of navigation bar */
-      
-      body 
-      {
-        font-family: Verdana, sans-serif; 
-      }
-      
-      
-      h1 
-      {
-        display: inline-block;
-        align-content: center;
-        margin-left: 42%;
-      }
-      
-      .sidepanel 
-      {
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        height: 100%;
-        top: 0;
-        left: 0;
-        /* background-color: #111; */
-        background-color: white;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-      }
-        
-      .sidepanel a 
-      {
-          padding: 8px 8px 8px 32px;
-          text-decoration: none;
-          font-size: 25px;
-          /* color: #818181; */
-          color: black;
-         /* color of the wording of home, leave, claims, feedback, register when panel first opens */
-          display: block;
-          transition: 0.3s;
-      }
-
-      .sidepanel a:hover 
-      {
-          /* color: #f1f1f1; */
-          color: rgba(0,0,0,0.4);
-       
-          /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
-      }
-
-      .sidepanel .closebtn 
-      {
-          position: absolute;
-          top: 0;
-          right: 25px;
-          font-size: 36px;
-      }
-      
-      .sidepanel .logout 
-      {
-          background-color: pink;
-          color: black;
-          position: relative;
-          margin-bottom: 250px;
-          top: 30px;
-          width: 200px;
-          right: 20px; 
-          margin-left: 20px;
-          text-align: left;
-      
-      }
-
-      .openbtn 
-      {
-          font-size: 20px;
-          cursor: pointer;
-          background-color: #111;
-          color: white;
-          padding: 10px 15px;
-          border: none;
-      }
-
-      .openbtn:hover {
-        background-color: #444;
-      
-      }
-
-      #main {
-        transition: margin-left .5s;
-        padding: 16px;
-      }
-
-      img
-      {
-        margin-left: 80px;
-      }
-
-      h3
-      {
-        margin-left: 40px;
-      }
-
-
-
-
-      
-    /* body {
-        font-family: "Lato", sans-serif;
-        background-color: #EEC9C9;    
+    /* start of navigation bar */
+    
+    body {
+      font-family: Verdana, sans-serif; 
+      background-color: #EEC9C9; 
     }
+    
     h1 {
-        text-align: center;
-        padding-bottom: 10px;
+      display: inline-block;
+      align-content: center;
+      
+      text-align: center;
+      padding-bottom: 10px;
     }
+    
     .sidepanel {
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      height: 100%;
+      top: 0;
+      left: 0;
+      /* background-color: #111; */
+      background-color: white;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
     }
+      
     .sidepanel a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      /* color: #818181; */
+      color: black;
+      /* color of the wording of home, leave, claims, feedback, register when panel first opens */
+      display: block;
+      transition: 0.3s;
     }
+
     .sidepanel a:hover {
-        color: #f1f1f1;
+      /* color: #f1f1f1; */
+      color: rgba(0,0,0,0.4);
+  
+      /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
     }
+
     .sidepanel .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
     }
+    
     .sidepanel .logout {
-        background-color: mediumspringgreen;
-        color: black;
-        position: absolute;
-        bottom: 60px;
-        width: 210px; 
+      background-color: pink;
+      color: black;
+      position: relative;
+      margin-bottom: 250px;
+      top: 30px;
+      width: 200px;
+      right: 20px; 
+      margin-left: 20px;
+      text-align: left;
+    
     }
+
     .openbtn {
-        font-size: 20px;
-        cursor: pointer;
-        background-color: #111;
-        color: white;
-        padding: 10px 15px;
-        border: none;
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      padding: 10px 15px;
+      border: none;
     }
+
     .openbtn:hover {
-        background-color: #444;
+      background-color: #444;
     }
+
     #main {
-        transition: margin-left .5s;
-        padding: 16px;
-    } */
+      transition: margin-left .5s;
+      padding: 16px;
+    }
+
+    img {
+      margin-left: 80px;
+    }
+
+    h3 {
+      margin-left: 40px;
+    }
 
     input[readonly] {
-        background-color:lightcyan;
+      background-color:lightcyan;
     }
 
     fieldset {
-        border: 3px solid #000000;
-        width: 60%;
-        margin: auto;
+      border: 3px solid #000000;
+      width: 60%;
+      margin: auto;
     }
 </style>
 
@@ -268,6 +194,16 @@
       }  
     }
 
+    document.getElementById("startdate").onchange = function () {
+      document.getElementById("enddate").setAttribute("min", this.value);
+      numofdays();
+    }
+
+    document.getElementById("enddate").onchange = function () {
+      document.getElementById("startdate").setAttribute("max", this.value);
+      numofdays();
+    }
+
     function openNav() {
         document.getElementById("mySidepanel").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px"
@@ -276,16 +212,6 @@
     function closeNav() {
         document.getElementById("mySidepanel").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
-    }
-
-    document.getElementById("startdate").onchange = function () {
-        document.getElementById("enddate").setAttribute("min", this.value);
-        numofdays();
-    }
-
-    document.getElementById("enddate").onchange = function () {
-        document.getElementById("startdate").setAttribute("max", this.value);
-        numofdays();
     }
 </script>
  </body>
