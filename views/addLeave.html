@@ -127,9 +127,8 @@
           <input type="text" class="textbox" id="numdays2" name="numdays" readonly/>
         </div><br><br> 
 
-
         <input type="submit" name="newLeaveBtn" value="Submit" />
-        <input type="submit" name="newLeaveBtn" value="Save as draft" />
+        <input type="submit" name="newLeaveBtn" value="Save as Draft" />
         <button onclick="history.back()">Cancel</button>
         <br><br>
         
@@ -143,16 +142,16 @@
 
     // calculates how many days are between "startdate" and "enddate" chosen
     function calcDays() {
-      var start = new Date(document.getElementById("startdate").value);
-      var end = new Date(document.getElementById("enddate").value);
+        var start = new Date(document.getElementById("startdate").value);
+        var end = new Date(document.getElementById("enddate").value);
 
-      return parseInt((end - start) / (24 * 3600 * 1000))+1;
+        return parseInt((end - start) / (24 * 3600 * 1000)) + 1;
     }
 
     // set the value of numdays field
     function numofdays() {
       if (document.getElementById("enddate")) {
-        document.getElementById("numdays2").value = calcDays();
+          document.getElementById("numdays2").value = calcDays();
       }  
     }
 
@@ -164,17 +163,17 @@
     function closeNav() {
         document.getElementById("mySidepanel").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
-      }
+    }
 
-     document.getElementById("startdate").onchange = function () {
-         document.getElementById("enddate").setAttribute("min", this.value);
-         numofdays();
-     }
+    document.getElementById("startdate").onchange = function () {
+        document.getElementById("enddate").setAttribute("min", this.value);
+        numofdays();
+    }
 
-     document.getElementById("enddate").onchange = function () {
-         document.getElementById("startdate").setAttribute("max", this.value);
-         numofdays();
-      }
+    document.getElementById("enddate").onchange = function () {
+        document.getElementById("startdate").setAttribute("max", this.value);
+        numofdays();
+    }
 </script>
  </body>
 </html>
