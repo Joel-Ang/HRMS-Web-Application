@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
     <style>
@@ -8,98 +8,134 @@
             margin-left: 42%;
         }
 
-        body {
-            font-family: "Lato", sans-serif;
-        }
+            /* start of navigation bar */
+      
+            body 
+      {
+        font-family: Verdana, sans-serif; 
+      }
+      
+      
+      h1 
+      {
+        display: inline-block;
+        align-content: center;
+        margin-left: 42%;
+      }
+      
+      .sidepanel 
+      {
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        height: 100%;
+        top: 0;
+        left: 0;
+        /* background-color: #111; */
+        background-color: white;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+        
+      .sidepanel a 
+      {
+          padding: 8px 8px 8px 32px;
+          text-decoration: none;
+          font-size: 25px;
+          /* color: #818181; */
+          color: black;
+         /* color of the wording of home, leave, claims, feedback, register when panel first opens */
+          display: block;
+          transition: 0.3s;
+      }
 
-        form {
-            text-align: center;
-            border: black;
-            border-radius: 2px;
-        }
+      .sidepanel a:hover 
+      {
+          /* color: #f1f1f1; */
+          color: rgba(0,0,0,0.4);
+       
+          /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
+      }
 
-        input, select {
-            margin: 4px 2px;
-        }
+      .sidepanel .closebtn 
+      {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
+      }
+      
+      .sidepanel .logout 
+      {
+          background-color: pink;
+          color: black;
+          position: relative;
+          margin-bottom: 250px;
+          top: 30px;
+          width: 200px;
+          right: 20px; 
+          margin-left: 20px;
+          text-align: left;
+      
+      }
 
-        input[name=address] {
-            width: 350px;
-            border-radius: 4px;
-        }
+      .openbtn 
+      {
+          font-size: 20px;
+          cursor: pointer;
+          background-color: #111;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+      }
 
-        select {
-            width: 20%;
-            text-align: center;
-        }
+      .openbtn:hover {
+        background-color: #444;
+      
+      }
 
-        .sidepanel {
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-        .sidepanel a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .sidepanel a:hover {
-            color: #f1f1f1;
-        }
-        .sidepanel .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-        }
-        .sidepanel .logout {
-            background-color: mediumspringgreen;
-            color: black;
-            position: absolute;
-            bottom: 60px;
-            width: 210px; 
-        }
-        .openbtn {
-            font-size: 20px;
-            cursor: pointer;
-            background-color: #111;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-        }
-        .openbtn:hover {
-            background-color: #444;
-        }
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
-        }
+      #main {
+        transition: margin-left .5s;
+        padding: 16px;
+      }
+
+      img
+      {
+        margin-left: 80px;
+      }
+
+      h3
+      {
+        margin-left: 40px;
+      }
+
+
+      /* end of navigation bar */
     </style>
     <title>Register</title>
 </head>
 <body>
+
     <!--Side Panel div-->
     <div id="mySidepanel" class="sidepanel">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <img src= "images/smurf.png">
+        <br> </br>
+        <h3>The Smurfy Gang<h3>
+          <br> </br>
+          <br> </br>
+     
         <a href="/">Home</a>
         <a href="/allleaves">Leave</a>
         <a href="/allclaims">Claims</a>
         <a href="/feedback">Feedback</a>
         <% if (session.roleid == 1 ){%>
         <a href="/register">Register</a>
-        <a href="/allFeedbacks">View feedbacks</a>
         <%}%>
         <a href="/logout" id="logout" class="logout">Logout</a>
-    </div>
+      </div>
+  
 
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
