@@ -1,11 +1,14 @@
 const http = require('http');
-const express = require("express");
+const express = require("express"); // have
 const sessions = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require ("body-parser");
-const app = express();
+const app = express();  // have
 const mysql = require("mysql");
+
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 const port = 8089;
 
@@ -26,8 +29,8 @@ app.use(cookieParser());
 const db = mysql.createConnection ({
     host: "localhost",
     user: "root",
-    password: "Password",
-    database: "HRMS"
+    password: "password",
+    database: "myAgileProject"
 });
 
  // connect to database
@@ -41,6 +44,22 @@ const db = mysql.createConnection ({
 
 require("./routes/main")(app);
 app.set("views",__dirname + "/views");
-app.set("view engine", "ejs");
+
+
+// below codes taken from jesse's mid term assignment for database
+
+// make images from local computer public so that markers can see the images 
+const path = require ('path');
+app.set("views", path.resolve(__dirname, "views/ejs"));
+app.use(express.static(path.join(__dirname, 'public')))
 app.engine("html", require("ejs").renderFile);
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port,() => console.log (`App listening on port http://localhost:${port}`));
+
+
+app.set("views", __dirname + "/views");
+app.set ("view engine", "ejs");
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
+
+
+
