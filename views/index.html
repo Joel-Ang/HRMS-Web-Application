@@ -194,21 +194,22 @@
 
     <!--Side Panel div-->
     <div id="mySidepanel" class="sidepanel">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <img src= "images/smurf.png">
-      <br> </br>
-      <h3>The Smurfy Gang<h3>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <img src= "images/smurf.png">
+        <br> </br>
+        <h3>The Smurfy Gang</h3>
         <br> </br>
         <br> </br>
-   
-      <a href="/">Home</a>
-      <a href="/allleaves">Leave</a>
-      <a href="/allclaims">Claims</a>
-      <a href="/feedback">Feedback</a>
-      <% if (session.roleid == 1 ){%>
-      <a href="/register">Register</a>
-      <%}%>
-      <a href="/logout" id="logout" class="logout">Logout</a>
+
+        <a href="/">Home</a>
+        <a href="/allleaves">Leave</a>
+        <a href="/allclaims">Claims</a>
+        <a href="/feedback">Feedback</a>
+        <% if (session.roleid == 1 ){%>
+        <a href="/register">Register</a>
+        <a href="/allFeedbacks">View feedbacks</a>
+        <%}%>
+        <a href="/logout" id="logout" class="logout">Logout</a>
     </div>
 
     <!--Main content div-->
@@ -223,7 +224,7 @@
             <img class = "fill" src = "images/avatar.png" width="100%" height="100%">
             <h2>Welcome, <%= result.Staff_name %>!</h2>
             <p>Username: <%= result.username %></p>
-            <p>Time Login: </p>
+            <p>Time Login: <%= session.loginTime %></p>
             <br></br>
             <button type = "button" id = "myButton1">Company Website</button>
         </div>
