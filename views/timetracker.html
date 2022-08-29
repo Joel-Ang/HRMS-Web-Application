@@ -271,12 +271,48 @@
           background-color: seashell;
           border-radius: 50px;
       
+      
+        }
+
+        input[id = "clockin"] 
+        {
+          float: left;
+          width: 30%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border: none;
+          background-color: lightcoral;
+          border-radius: 50px;
+          margin-left: 110px;
+          bottom: 250px;
+          margin-top: -10px;
+  
+      
+      
+        }
+
+        input[id = "clockout"] 
+        {
+          float: right;
+          width: 30%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border: none;
+          background-color: lightcoral;
+          border-radius: 50px;
+          margin-right: 50px;
+          bottom: 150px;
+          margin-top: -10px;
         }
 
  
      
     </style>
+
     <title>Register</title>
+
 </head>
 <body>
 
@@ -333,10 +369,31 @@
 
    
               <br></br>
-              
+
 
               
+              <!-- <label>Clock In: </label> -->
+              <!-- <input id="clockin" type="image" name="clockin" value="" placeholder="Clock In" style = "margin-left: 5px;" required /> </br> -->
+
+              <input type="submit" id = "clockin" value="Clock In">
+              <input type="submit" id = "clockout" value="Clock Out">
+
+              
+
+
+              <!-- <label>Notes: </label>
+              <br> </br>
+              <textarea type="text" id="note" name="notes" placeholder="Input notes here.." 
+              style = "width: 67%;
+              padding: 12px 20px;
+              margin: 8px 0;
+              box-sizing: border-box;
+              border: none;
+              background-color: seashell;
+              border-radius: 20px; height:120px; margin-left: 100px; margin-top: -40px;"></textarea>
           
+
+              <input type="submit" id = "submitnotes" value="Submit"> -->
        
             </form>
         </div>
@@ -352,7 +409,13 @@
         document.getElementById("mySidepanel").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
       }
-</script>
+    </script>
+
+
+
+
+
+
 
 </body>
 </html>
