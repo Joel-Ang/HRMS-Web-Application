@@ -433,5 +433,52 @@ module.exports = function(app) {
             }
         });
     });
+
+
+    app.get("/timetracker",function(req, res) {
+      if (req.session.username) {
+        let sqlquery = "SELECT Staff_id, Staff_name FROM Staff";
+        
+        db.query(sqlquery, (err, result) => {
+          if (err) {
+            res.redirect("/");
+          }
+          else {
+              res.render("timetracker.html", { staffs: result });
+          }
+        });
+
+      }
+      else
+          res.render("login.html");
+    });
+
+      // POST timetracked page
+    app.post("/timetracked", function (req, res) {
+        let sqlquery, newrecord;
+
+        // Clock in button pressed
+        if (req.body.clockBtn == 'Clock In') {
+          sqlquery = "INSERT INTO Punch_Card (Staff_id, date, clock_in_time, clock_out_time, break_hours) VALUES (?,?,?,?,?)";
+          newrecord = [req.body.staffName, new Date(), new Date(), "0000-00-00 00:00:00", 1];
+        }
+
+        // Clock out button pressed
+        else if (req.body.clockBtn == 'Clock Out') {
+          sqlquery = "UPDATE Punch_Card SET clock_out_time = ? WHERE clock_out_time = ? AND Staff_id = ?";
+          newrecord = [new Date(), "0000-00-00 00:00:00", req.body.staffName];
+        }
+
+        db.query(sqlquery, newrecord, (err, result) => {
+            if (err) {
+              console.log(err);
+              res.redirect("/timetracker");
+            }
+            else {
+              res.redirect("/timetracker");
+            }
+        });
+    });
+
 }
     

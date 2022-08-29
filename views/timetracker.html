@@ -339,21 +339,15 @@
     <div id="main">
       <button class="openbtn" onclick="openNav()">☰</button> 
 
-   
-
-
 
         <div class = "center">
             <h2> Time Tracker</h2>
             <h1>Staff</h1>
             <h5>Replacement of Timesheet</h5>
-            <form method="POST" action="/registered">
-               
-             
+            <form action="/timetracked" method="POST">
 
-              
               <label>Staff Name: </label>
-              <select id="dept" name="dept" 
+              <select id="staffName" name="staffName" 
               style = "width: 67%;
               padding: 12px 20px;
               margin: 8px 0;
@@ -362,8 +356,8 @@
               background-color: seashell;
               border-radius: 50px;"  required>
             
-                <% staffNames.forEach(function(name){ %>
-                <option id = "staffname" value = "<%= name.Staff_name %>"><%= name.Staff_name %></option>
+                <% staffs.forEach(function(name){ %>
+                <option id = "staffname" value = "<%= name.Staff_id %>"><%= name.Staff_name %></option>
                 <% }) %>
               </select>
 
@@ -375,8 +369,8 @@
               <!-- <label>Clock In: </label> -->
               <!-- <input id="clockin" type="image" name="clockin" value="" placeholder="Clock In" style = "margin-left: 5px;" required /> </br> -->
 
-              <input type="submit" id = "clockin" value="Clock In">
-              <input type="submit" id = "clockout" value="Clock Out">
+              <input type="submit" name="clockBtn" id="clockin" value="Clock In">
+              <input type="submit" name="clockBtn" id="clockout" value="Clock Out">
 
               
 
