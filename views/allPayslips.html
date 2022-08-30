@@ -1,0 +1,326 @@
+﻿<!doctype html>
+<html>
+
+<head>
+
+    <style>
+
+        #payslipTable, #calculatePayslip {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #payslipTable td, #payslipTable th, #calculatePayslip td, #calculatePayslip th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #payslipTable th, #calculatePayslip th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #686868;
+            color: white;
+        }
+
+        h1 {
+            display: inline-block;
+            align-content: center;
+            margin-left: 42%;
+        }
+
+        body {
+            font-family: "Lato", sans-serif;
+        }
+        .sidepanel {
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidepanel a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidepanel a:hover {
+            color: #f1f1f1;
+        }
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+        }
+        .sidepanel .logout {
+            background-color: mediumspringgreen;
+            color: black;
+            position: absolute;
+            bottom: 60px;
+            width: 210px; 
+        }
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+        .openbtn:hover {
+            background-color: #444;
+        }
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+    </style>
+
+    <title>Payslips</title>
+</head>
+
+<body>
+    <!--Side Panel div-->
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="/">Home</a>
+        <a href="/allleaves">Leave</a>
+        <a href="/allclaims">Claims</a>
+        <a href="/feedback">Feedback</a>
+        <% if (session.roleid == 1 ){%>
+        <a href="/register">Register</a>
+        <a href="/allFeedbacks">View feedbacks</a>
+        <%}%>
+        <a href="/logout" id="logout" class="logout">Logout</a>
+    </div>
+    <!--Main content div-->
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
+        <h1> Payslips </h1> <br />
+        
+        <thead>
+            <form action="/allPayslips" method="POST">
+                <label>Select Month: </label><select onchange="this.form.submit()" id="DDLDates" name="DDLDates">
+                    <option selected="selected">Dates</option>
+                    <% allDropdownDates.forEach(function(date){ %>
+                    <option value="<%= date.Date %>"><%= date.Date %></option>
+                    <% }) %>
+                </select>
+            </form>
+        </thead>
+
+        <tbody>
+            <table id="payslipTable" name="payslipTable">
+                <tr>
+                    <th style="display:none"></th>
+                    <th>Date</th>
+                    <th>Clock In</th>
+                    <th>Clock Out</th>
+                    <th>Total Hours</th>
+                    <th>Break Hours</th>
+                    <th>Daily Total</th>
+                    <th>Regular Hours</th>
+                    <th>Overtime</th>
+                </tr>
+                <% allPunchCards.forEach(function(punchCard){ %>
+                <tr>
+                    <td style="display:none"><input value=<%= punchCard.PC_id %> name="PCid" type="text" /></td>
+                    <td><%= punchCard.date.toDateString() %></td>
+                    <td><%= punchCard.CIT %></td>
+                    <td><%= punchCard.COT %></td>
+                    <td class="hours"><%= punchCard.TotalHours %></td>
+                    <td class="breakHours"><%= punchCard.break_hours %> hrs</td>
+                    <td class="dailyHours"><%= punchCard.TotalHours %></td>
+                    <% if (punchCard.TotalHours < "08:00:00") { %>
+                    <td class="regularHours"><%= punchCard.TotalHours %></td>
+                    <% } else { %>
+                    <td class="regularHours">08:00:00</td>
+                    <% } %>
+                    <td class="overtimeHours"></td>
+                </tr>
+                <% }) %>
+                <tr>
+                    <td><b>Total:</b></td>
+                    <td></td>
+                    <td></td>
+                    <td id="totalHours">TOTAL HOURS</td>
+                    <td id="totalBreakHours">TOTAL BREAK HOURS</td>
+                    <td id="totalDailyHours">test</td>
+                    <td id="totalRegularHours">test</td>
+                    <td id="totalOvertimeHours">test</td>
+                </tr>
+            </table>
+            <table id="calculatePayslip" name="calculatePayslip">
+                <tr>
+                    <th></th>
+                    <th>Hours Worked</th>
+                    <th>Amount</th>
+                </tr>
+                <tr>
+                    <td>Basic Pay($10/hr)</td>
+                    <td id="basicPayHours"></td>
+                    <td id="basicPayAmount">$0</td>
+                </tr>
+                <tr>
+                    <td>Overtime Pay</td>
+                    <td id="overtimePayHours"></td>
+                    <td id="overtimePayAmount">$0</td>
+                </tr>
+                <tr>
+                    <td>Total Pay</td>
+                    <td></td>
+                    <td id="totalPayAmount">$0</td>
+                </tr>
+                <tr>
+                    <td>CPF Contribution</td>
+                    <td></td>
+                    <td id="CPFAmount">$0</td>
+                </tr>
+                <tr>
+                    <td>Net Pay</td>
+                    <td></td>
+                    <td id="netPayAmount">$0</td>
+                </tr>
+            </table>
+        </tbody><br />
+    </div>
+
+    <script>
+        updateTotalHours(); 
+        updateTotalBreakHours();
+        updateTotalDailyHours();
+        updateTotalRegularHours();
+        updateTotalOvertimeHours();
+        calculatePay();
+
+        function updateTotalHours() {
+            var t1 = 0;
+            let totalHours = document.getElementsByClassName("hours");
+            for (let i = 0; i < totalHours.length; i++){
+                var t2 = totalHours[i].innerHTML.split(':');
+                t1 = t1 + (Number(t2[0]) * 3600) + (Number(t2[1]) * 60) + (Number(t2[2]));
+            }
+            document.getElementById("totalHours").innerHTML = convert(Number(t1));
+        }
+
+        function updateTotalBreakHours() {
+            let totalBreakHours = document.getElementsByClassName("breakHours");
+            var t1 = 0;
+            for (let i = 0; i < totalBreakHours.length; i++) {
+                var t2 = totalBreakHours[i].innerHTML.split(' ');
+                t1 = t1 + (Number(t2[0]));
+            }
+
+            document.getElementById("totalBreakHours").innerHTML = t1 + " hrs";
+        }
+
+        function updateTotalDailyHours() {
+            let totalHours = document.getElementsByClassName("hours");
+            let totalBreakHours = document.getElementsByClassName("breakHours");
+            var t1 = 0;
+            for (let i = 0; i < totalBreakHours.length; i++) {
+                var TH = totalHours[i].innerHTML.split(':');
+                var THsecs = (Number(TH[0]) * 3600) + (Number(TH[1]) * 60) + (Number(TH[2]));
+                var TBHsecs = Number(totalBreakHours[i].innerHTML.split(' ')[0]) * 3600;    
+                t1 = t1 + (THsecs - TBHsecs);
+                document.getElementsByClassName("dailyHours")[i].innerHTML = convert(THsecs - TBHsecs);
+            }
+
+            document.getElementById("totalDailyHours").innerHTML = convert(t1);
+        }
+
+        function updateTotalRegularHours() {
+            var t1 = 0;
+            let totalHours = document.getElementsByClassName("regularHours");
+            for (let i = 0; i < totalHours.length; i++) {
+                var t2 = totalHours[i].innerHTML.split(':');
+                t1 = t1 + (Number(t2[0]) * 3600) + (Number(t2[1]) * 60) + (Number(t2[2]));
+            }
+            document.getElementById("totalRegularHours").innerHTML = convert(Number(t1));
+            document.getElementById("basicPayHours").innerHTML = convert(Number(t1));
+        }
+
+        function updateTotalOvertimeHours() {
+            let totalDailyHours = document.getElementsByClassName("dailyHours");
+            let totalRegularHours = document.getElementsByClassName("regularHours");
+            var t1 = 0;
+            for (let i = 0; i < totalDailyHours.length; i++) {
+                var TDH = totalDailyHours[i].innerHTML.split(':');
+                var TRH = totalRegularHours[i].innerHTML.split(':');
+                if (TDH > TRH) {
+                    var TDHsecs = (Number(TDH[0]) * 3600) + (Number(TDH[1]) * 60) + (Number(TDH[2]));
+                    var TRHsecs = (Number(TRH[0]) * 3600) + (Number(TRH[1]) * 60) + (Number(TRH[2]));
+                    t1 = t1 + (TDHsecs - TRHsecs);
+                    document.getElementsByClassName("overtimeHours")[i].innerHTML = convert(TDHsecs - TRHsecs);
+                }
+                else {
+                    document.getElementsByClassName("overtimeHours")[i].innerHTML = "00:00:00";
+                }
+            }
+            if (t1 == 0) {
+                document.getElementById("totalOvertimeHours").innerHTML = "00:00:00";
+                document.getElementById("overtimePayHours").innerHTML = "00:00:00";
+            }
+            else {
+                document.getElementById("totalOvertimeHours").innerHTML = convert(t1);
+                document.getElementById("overtimePayHours").innerHTML = convert(t1);
+            }
+        }
+
+        function calculatePay() {
+            let totalBasicPayHours = document.getElementById("basicPayHours");
+            var TBPH = totalBasicPayHours.innerHTML.split(':');
+            var TBPHAmount = ((Number(TBPH[0])) + (Number(TBPH[1]) * (1 / 60)) + (Number(TBPH[2]) * (1 / 3600))) * 10 ;
+            document.getElementById("basicPayAmount").innerHTML = "$" + TBPHAmount.toFixed(2);
+
+            let totalOvertimeHours = document.getElementById("overtimePayHours");
+            var TOPH = totalOvertimeHours.innerHTML.split(':');
+            var TOPHAmount = ((Number(TOPH[0])) + (Number(TOPH[1]) * (1 / 60)) + (Number(TOPH[2]) * (1 / 3600))) * 10;
+            document.getElementById("overtimePayAmount").innerHTML = "$" + TOPHAmount.toFixed(2);
+
+            var totalPayAmount = TBPHAmount + TOPHAmount;
+            document.getElementById("totalPayAmount").innerHTML = "$" + totalPayAmount.toFixed(2);
+
+            var CPFAmount = totalPayAmount * 0.2;
+            if (CPFAmount == 0)
+                document.getElementById("CPFAmount").innerHTML = "$" + CPFAmount.toFixed(2);
+            else
+                document.getElementById("CPFAmount").innerHTML = "$" + CPFAmount.toFixed(2);
+
+            var netPayAmount = totalPayAmount - CPFAmount;
+            document.getElementById("netPayAmount").innerHTML = "$" + netPayAmount.toFixed(2);
+
+        }
+
+        function convert(sec_num) {
+            var hours = Math.floor(sec_num / 3600);
+            var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+            var seconds = sec_num - (hours * 3600) - (minutes * 60);
+            if (hours < 10) { hours = "0" + hours; }
+            if (minutes < 10) { minutes = "0" + minutes; }
+            if (seconds < 10) { seconds = "0" + seconds; }
+            return hours + ':' + minutes + ':' + seconds;
+        }
+
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px"
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
+</body>
+</html>

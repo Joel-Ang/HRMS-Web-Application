@@ -480,5 +480,58 @@ module.exports = function(app) {
         });
     });
 
+    app.get("/allPayslips", function (req, res) {
+
+        if (req.session.username) {
+            let values = [req.session.staffid];
+            sqlquery2 = "SELECT DISTINCT(DATE_FORMAT(date, '%m %Y')) AS Date FROM punch_card WHERE Staff_id = ? ORDER BY date ASC"
+            db.query(sqlquery2, values, (err, DDLDates) => {
+                if (err) {
+                    res.redirect("/");
+                }
+                else {
+                    console.log(DDLDates);
+                    res.render("allPayslips.html", { allPunchCards: [], allDropdownDates: DDLDates });
+                }
+            });
+        }
+        else
+            res.render("login.html");
+
+    });
+    app.post("/allPayslips", function (req, res) {
+
+        if (req.session.username) {
+            console.log(req.body.DDLDates);
+            let MY = req.body.DDLDates.trim().split(/\s+/);
+            console.log(MY);
+            let values = [req.session.staffid, MY[0], MY[1]];
+            let sqlquery1 = "Select PC_id, date, CAST(clock_in_time AS TIME) AS CIT, CAST(clock_out_time AS TIME) AS COT, break_hours, TIMEDIFF(clock_out_time,clock_in_time) AS TotalHours " +
+                "FROM punch_card " +
+                "WHERE staff_id = ? AND MONTH(date) = ? AND YEAR(date) = ? " +
+                "ORDER BY date ASC";
+            db.query(sqlquery1, values, (err, PCDates) => {
+                if (err) {
+                    res.redirect("/");
+                }
+                else {
+                    sqlquery2 = "SELECT DISTINCT(DATE_FORMAT(date, '%m %Y')) AS Date FROM punch_card WHERE Staff_id = ? ORDER BY date ASC"
+                    db.query(sqlquery2, values, (err, DDLDates) => {
+                        if (err) {
+                            res.redirect("/");
+                        }
+                        else {
+                            let sqlquery3 = "Select SEC_TO_TIME(sum(TIME_TO_SEC(clock_out_time) - TIME_TO_SEC(clock_in_time))) as TotalTimeDiff, SUM(break_hours) AS TotalBreakHours,  from punch_card where MONTH(date) = ?"
+                            console.log(DDLDates);
+                            res.render("allPayslips.html", { allPunchCards: PCDates, allDropdownDates: DDLDates });
+                        }
+                    });
+                }
+            });
+        }
+        else
+            res.render("login.html");
+
+    });
 }
     
