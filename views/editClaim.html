@@ -1,41 +1,196 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
+    <style>
+
+        h1 {
+            display: inline-block;
+            width: 100%;
+            align-content: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        form {
+            text-align: center;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 25px;
+            border: 3px solid #000000;
+        }
+        /* start of navigation bar */
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #EEC9C9;
+        }
+
+        
+        .sidepanel {
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            height: 100%;
+            top: 0;
+            left: 0;
+            /* background-color: #111; */
+            background-color: white;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidepanel a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            /* color: #818181; */
+            color: black;
+            /* color of the wording of home, leave, claims, feedback, register when panel first opens */
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidepanel a:hover {
+            /* color: #f1f1f1; */
+            color: rgba(0,0,0,0.4);
+            /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
+        }
+
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+        }
+
+        .sidepanel .logout {
+            background-color: pink;
+            color: black;
+            position: relative;
+            margin-bottom: 250px;
+            top: 30px;
+            width: 200px;
+            right: 20px;
+            margin-left: 20px;
+            text-align: left;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        img {
+            margin-left: 80px;
+        }
+
+        h3 {
+            margin-left: 40px;
+        }
+
+
+        /* end of navigation bar */
+    </style>
     <title>New Claim</title>
 </head>
 <body>
-    <h1> Edit Claim </h1>
-    <form method="POST" action="/editClaims">
-        <label>Staff ID: </label> </br>
-        <input id="staffID" name="staffID" type="text" value=<%= staffDetails[0].Staff_id %> disabled> </br>
-        <label>Name: </label> </br>
-        <input id="name" name="name" type="text" value=<%= staffDetails[0].Staff_name %> disabled> </br>
-        <label>Department: </label> </br>
-        <input id="dept" name="dept" type="text" value=<%= staffDetails[0].Department_name %> disabled> </br>
-        <label>Claim Date: </label> </br>
-        <input id="date" name="date" type="date" value=<%= claimDetails[0].date_of_claim %> </br>
-        <label>Claim Type: </label> </br>
-        <select id="claimType" name="claimType">
-            <option value="">Select A Claim Type</option>
-            <% claimTypes.forEach(function(types){ %>
-            <% if (types.CT_id == claimDetails[0].CT_id) {%>
-            <option selected="selected" value=<%= types.CT_id %>><%= types.type %></option>
-            <% } else { %>
-            <option value=<%= types.CT_id %>><%= types.type %></option>
-            <% } %>
-            <% }) %>
-        </select> </br>
-        <label>Claim Amount: </label> </br>
-        <span>$ <input type="number" id="claimAmount" name="claimAmount" step=0.01 value=<%= claimDetails[0].claim_amount %> ></span></br>
-        <!--<label>Upload Receipt: </label><input type="file"> </br>-->
-        <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Submit Claim">
-        <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Save as Draft">
-        <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Cancel">
-        <input hidden="hidden" type="text" value=<%= claimDetails[0].claim_id %> id="claim_id" name="claim_id" >
-    </form>
+    <!--Side Panel div-->
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <img src="images/smurf.png">
+        <br> </br>
+        <h3>The Smurfy Gang</h3>
+        <br> </br>
+        <br> </br>
+
+        <a href="/">Home</a>
+        <a href="/allleaves">Leave</a>
+        <a href="/allclaims">Claims</a>
+        <a href="/feedback">Feedback</a>
+        <% if (session.roleid == 1 ){%>
+        <a href="/register">Register</a>
+        <a href="/allFeedbacks">View feedbacks</a>
+        <%}%>
+        <a href="/logout" id="logout" class="logout">Logout</a>
+    </div>
+    <!--Main content div-->
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
+        <form method="POST" action="/editClaims">
+
+            <h1> Edit Claim </h1> </br>
+            <label>
+                Staff ID:
+                <input id="staffID" name="staffID" type="text" value=<%= staffDetails[0].Staff_id %> disabled>
+            </label>
+            <label>
+                Name:
+                <input id="name" name="name" type="text" value=<%= staffDetails[0].Staff_name %> disabled>
+            </label>
+            <label>
+                Department:
+                <input id="dept" name="dept" type="text" value=<%= staffDetails[0].Department_name %> disabled>
+            </label>
+            </br>
+            </br>
+            <label>
+                Claim Date:
+                <input id="date" name="date" type="date" value=<%= claimDetails[0].date_of_claim %>
+            </label>
+            <label>
+                Claim Type:
+                <select id="claimType" name="claimType">
+                    <option value="">Select A Claim Type</option>
+                    <% claimTypes.forEach(function(types){ %>
+                    <% if (types.CT_id == claimDetails[0].CT_id) {%>
+                    <option selected="selected" value=<%= types.CT_id %>><%= types.type %></option>
+                    <% } else { %>
+                    <option value=<%= types.CT_id %>><%= types.type %></option>
+                    <% } %>
+                    <% }) %>
+                </select>
+            </label>
+            <label>
+                Claim Amount:
+                <span>$ <input type="number" id="claimAmount" name="claimAmount" step=0.01 value=<%= claimDetails[0].claim_amount %> ></span>
+            </label>
+            </br>
+            </br>
+            <!--<label>Upload Receipt: </label><input type="file"> </br>-->
+            <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Submit Claim">
+            <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Save as Draft">
+            <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Cancel">
+            <input hidden="hidden" type="text" value=<%= claimDetails[0].claim_id %> id="claim_id" name="claim_id" >
+        </form>
+    </div>
+
     <script>
         function removeDisable() {
             document.getElementById("staffID").removeAttribute("disabled");
+        }
+
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px"
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
         }
     </script>
 </body>

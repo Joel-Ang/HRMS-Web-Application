@@ -5,10 +5,18 @@
 
     <style>
 
-        #payslipTable, #calculatePayslip {
+        #payslipTable {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
-            width: 100%;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #calculatePayslip {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 35%;
+            margin-left: 10%;
         }
 
         #payslipTable td, #payslipTable th, #calculatePayslip td, #calculatePayslip th {
@@ -24,15 +32,28 @@
             color: white;
         }
 
+        #payslipTable tr ,#calculatePayslip tr{
+            background-color: white;
+        }
+
+        table {
+          border: 2px solid #000000;
+          margin-top: 10px;
+        }
+
+        /* start of navigation bar */
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #EEC9C9;
+        }
+
+
         h1 {
             display: inline-block;
             align-content: center;
             margin-left: 42%;
         }
 
-        body {
-            font-family: "Lato", sans-serif;
-        }
         .sidepanel {
             width: 0;
             position: fixed;
@@ -40,35 +61,49 @@
             height: 100%;
             top: 0;
             left: 0;
-            background-color: #111;
+            /* background-color: #111; */
+            background-color: white;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
         }
+
         .sidepanel a {
             padding: 8px 8px 8px 32px;
             text-decoration: none;
             font-size: 25px;
-            color: #818181;
+            /* color: #818181; */
+            color: black;
+            /* color of the wording of home, leave, claims, feedback, register when panel first opens */
             display: block;
             transition: 0.3s;
         }
+
         .sidepanel a:hover {
-            color: #f1f1f1;
+            /* color: #f1f1f1; */
+            color: rgba(0,0,0,0.4);
+            /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
         }
+
         .sidepanel .closebtn {
             position: absolute;
             top: 0;
             right: 25px;
             font-size: 36px;
         }
+
         .sidepanel .logout {
-            background-color: mediumspringgreen;
+            background-color: pink;
             color: black;
-            position: absolute;
-            bottom: 60px;
-            width: 210px; 
+            position: relative;
+            margin-bottom: 250px;
+            top: 30px;
+            width: 200px;
+            right: 20px;
+            margin-left: 20px;
+            text-align: left;
         }
+
         .openbtn {
             font-size: 20px;
             cursor: pointer;
@@ -77,13 +112,26 @@
             padding: 10px 15px;
             border: none;
         }
+
         .openbtn:hover {
             background-color: #444;
         }
+
         #main {
             transition: margin-left .5s;
             padding: 16px;
         }
+
+        img {
+            margin-left: 80px;
+        }
+
+        h3 {
+            margin-left: 40px;
+        }
+
+
+        /* end of navigation bar */
     </style>
 
     <title>Payslips</title>
@@ -93,6 +141,12 @@
     <!--Side Panel div-->
     <div id="mySidepanel" class="sidepanel">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <img src="images/smurf.png">
+        <br> </br>
+        <h3>The Smurfy Gang</h3>
+        <br> </br>
+        <br> </br>
+
         <a href="/">Home</a>
         <a href="/allleaves">Leave</a>
         <a href="/allclaims">Claims</a>
@@ -107,9 +161,9 @@
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
         <h1> Payslips </h1> <br />
-        
+
         <thead>
-            <form action="/allPayslips" method="POST">
+            <form action="/allPayslips" method="POST" id="monthDDL" name="monthDDL">
                 <label>Select Month: </label><select onchange="this.form.submit()" id="DDLDates" name="DDLDates">
                     <option selected="selected">Dates</option>
                     <% allDropdownDates.forEach(function(date){ %>
@@ -196,7 +250,7 @@
     </div>
 
     <script>
-        updateTotalHours(); 
+        updateTotalHours();
         updateTotalBreakHours();
         updateTotalDailyHours();
         updateTotalRegularHours();
@@ -206,7 +260,7 @@
         function updateTotalHours() {
             var t1 = 0;
             let totalHours = document.getElementsByClassName("hours");
-            for (let i = 0; i < totalHours.length; i++){
+            for (let i = 0; i < totalHours.length; i++) {
                 var t2 = totalHours[i].innerHTML.split(':');
                 t1 = t1 + (Number(t2[0]) * 3600) + (Number(t2[1]) * 60) + (Number(t2[2]));
             }
@@ -231,7 +285,7 @@
             for (let i = 0; i < totalBreakHours.length; i++) {
                 var TH = totalHours[i].innerHTML.split(':');
                 var THsecs = (Number(TH[0]) * 3600) + (Number(TH[1]) * 60) + (Number(TH[2]));
-                var TBHsecs = Number(totalBreakHours[i].innerHTML.split(' ')[0]) * 3600;    
+                var TBHsecs = Number(totalBreakHours[i].innerHTML.split(' ')[0]) * 3600;
                 t1 = t1 + (THsecs - TBHsecs);
                 document.getElementsByClassName("dailyHours")[i].innerHTML = convert(THsecs - TBHsecs);
             }
@@ -280,7 +334,7 @@
         function calculatePay() {
             let totalBasicPayHours = document.getElementById("basicPayHours");
             var TBPH = totalBasicPayHours.innerHTML.split(':');
-            var TBPHAmount = ((Number(TBPH[0])) + (Number(TBPH[1]) * (1 / 60)) + (Number(TBPH[2]) * (1 / 3600))) * 10 ;
+            var TBPHAmount = ((Number(TBPH[0])) + (Number(TBPH[1]) * (1 / 60)) + (Number(TBPH[2]) * (1 / 3600))) * 10;
             document.getElementById("basicPayAmount").innerHTML = "$" + TBPHAmount.toFixed(2);
 
             let totalOvertimeHours = document.getElementById("overtimePayHours");
