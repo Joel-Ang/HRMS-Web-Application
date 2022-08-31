@@ -130,7 +130,7 @@
     <!--Main content div-->
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
-        <form method="POST" action="/editClaims">
+        <form method="POST" action="/editClaims" id="editClaim" name="editClaim">
 
             <h1> Edit Claim </h1> </br>
             <label>
@@ -168,13 +168,13 @@
                 Claim Amount:
                 <span>$ <input required type="number" id="claimAmount" name="claimAmount" step=0.01 value=<%= claimDetails[0].claim_amount %> ></span>
             </label>
+            <input hidden="hidden" type="text" value=<%= claimDetails[0].claim_id %> id="claim_id" name="claim_id" >
             </br>
             </br>
             <!--<label>Upload Receipt: </label><input type="file"> </br>-->
             <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Submit Claim">
             <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Save as Draft">
             <button onclick="history.back()">Cancel</button>
-            <input hidden="hidden" type="text" value=<%= claimDetails[0].claim_id %> id="claim_id" name="claim_id" >
         </form>
     </div>
 

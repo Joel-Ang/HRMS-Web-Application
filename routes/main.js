@@ -13,7 +13,6 @@ module.exports = function(app) {
         let record = [req.body.E_id, req.body.password];
         db.query(sqlquery, record, (err, result) => {
             if (err) {
-                console.log(err);
                 res.redirect("/");               
             }
             else {
@@ -67,7 +66,6 @@ module.exports = function(app) {
         if (req.session.username) { 
             //check if roles are admin
             if (req.session.roleid == 1) {
-                console.log(req.session.roleid);
                 let sqldepartmentquery = "Select * from department";
                 let sqlrolequery = "Select * from role";
                 db.query(sqldepartmentquery, (err, departmentResult) => {
@@ -240,11 +238,10 @@ module.exports = function(app) {
                 " WHERE Staff.Staff_id = ?";
             let staffid = [req.session.staffid];
             db.query(sqlquery, staffid, (err, result) => {
-            if (err)
-            {
-                    console.log(err);
-                     res.redirect("/");
-            }
+                if (err)
+                {
+                    res.redirect("/");
+                }
                 else
                     res.render("allClaims.html", { availableClaims: result });
             });
@@ -277,7 +274,7 @@ module.exports = function(app) {
                                 let claimsid = [req.body.checkbox[0]];
                                 db.query(sqlclaimdetailquery, claimsid, (err, claimDetail,) => {
                                     if (err) {
-                                        console.log(err); res.redirect("/allClaims");
+                                        res.redirect("/allClaims");
                                     }
                                     else {
                                         res.render('editClaim.html', { staffDetails: staffDetail, claimTypes: claimType, claimDetails: claimDetail })
@@ -320,10 +317,7 @@ module.exports = function(app) {
         let month = date_ob.getMonth() + 1;
         let year = date_ob.getFullYear();
         let fullDate = year + "-" + month + "-" + date + " 00:00:00";
-        // prints date & time in YYYY-MM-DD format
-        console.log(fullDate);
         let values;
-        console.log(req.body.newClaimButtons);
         let sqlquery = "UPDATE Claim SET CT_id = ?, date_submitted = ?, claim_amount = ?, date_of_claim = ?, status = ? " +
                        "WHERE claim_id = ?";
 
@@ -331,17 +325,11 @@ module.exports = function(app) {
             values = [req.body.claimType, fullDate, req.body.claimAmount, dateOfClaim, "Pending Approval", req.body.claim_id];
         }
         if (req.body.newClaimButtons == "Save as Draft") {
-            values = [req.body.claimType, req.body.staffID, fullDate, req.body.claimAmount, dateOfClaim, "Saved As Draft", req.body.claim_id];
+            values = [req.body.claimType, fullDate, req.body.claimAmount, dateOfClaim, "Saved As Draft", req.body.claim_id];
         }
-        if (req.body.newClaimButtons == "Cancel") {
-            res.redirect("/allClaims");
-            return;
-        }
-        console.log(values);
         db.query(sqlquery, values, (err, result) => {
             if (err) {
-                res.redirect("/");
-                console.log(err);
+                res.redirect("/allClaims");
             }
             else {
                 res.redirect("/allClaims");
@@ -406,10 +394,7 @@ module.exports = function(app) {
         let month = date_ob.getMonth() + 1;
         let year = date_ob.getFullYear();
         let fullDate = year + "-" + month + "-" + date + " 00:00:00";
-        // prints date & time in YYYY-MM-DD format
-        console.log(fullDate);
         let values;
-        console.log(req.body.newClaimButtons);
         let sqlquery = "INSERT INTO Claim (CT_id, Staff_id, date_submitted, claim_amount, date_of_claim, status) values (?,?,?,?,?,?)";
 
         if (req.body.newClaimButtons == "Submit Claim") {
@@ -422,11 +407,9 @@ module.exports = function(app) {
             res.redirect("/allClaims");
             return;
         }
-        console.log(values);
         db.query(sqlquery, values, (err, result) => {
             if (err) {
                 res.redirect("/");
-                console.log(err);
             }
             else {
                 res.redirect("/allClaims");
@@ -471,7 +454,6 @@ module.exports = function(app) {
 
         db.query(sqlquery, newrecord, (err, result) => {
             if (err) {
-              console.log(err);
               res.redirect("/timetracker");
             }
             else {
@@ -490,7 +472,6 @@ module.exports = function(app) {
                     res.redirect("/");
                 }
                 else {
-                    console.log(DDLDates);
                     res.render("allPayslips.html", { allPunchCards: [], allDropdownDates: DDLDates });
                 }
             });
@@ -502,9 +483,7 @@ module.exports = function(app) {
     app.post("/allPayslips", function (req, res) {
 
         if (req.session.username) {
-            console.log(req.body.DDLDates);
             let MY = req.body.DDLDates.trim().split(/\s+/);
-            console.log(MY);
             let values = [req.session.staffid, MY[0], MY[1]];
             let sqlquery1 = "Select PC_id, date, CAST(clock_in_time AS TIME) AS CIT, CAST(clock_out_time AS TIME) AS COT, break_hours, TIMEDIFF(clock_out_time,clock_in_time) AS TotalHours " +
                 "FROM punch_card " +
@@ -522,7 +501,6 @@ module.exports = function(app) {
                         }
                         else {
                             let sqlquery3 = "Select SEC_TO_TIME(sum(TIME_TO_SEC(clock_out_time) - TIME_TO_SEC(clock_in_time))) as TotalTimeDiff, SUM(break_hours) AS TotalBreakHours,  from punch_card where MONTH(date) = ?"
-                            console.log(DDLDates);
                             res.render("allPayslips.html", { allPunchCards: PCDates, allDropdownDates: DDLDates });
                         }
                     });
