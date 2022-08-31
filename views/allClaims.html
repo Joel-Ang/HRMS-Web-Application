@@ -165,7 +165,7 @@
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
         <h1> Claims </h1>
-        <form method="POST" action="/allClaims">
+        <form method="POST" action="/allClaims" >
             <input type="submit" id="newClaim" name="claimButtons" value="New Claim" />
             <input type="submit" id="editClaim" name="claimButtons" value="Edit Claim" />
             <input type="submit" id="deleteClaim" name="claimButtons" value="Delete Claim" /> </br>
@@ -200,15 +200,44 @@
         </form>
     </div>
     <script>
-        $(document).on('change', '.checkme', function () {
-            var label = $(this).parent();
-            if ($(this).prop('checked')) {
-                var checkBox = $(this).val();
-                alert(checkBox);
-            } else {
-                alert('Un checked');
+
+        document.getElementById("editClaim").addEventListener("click", function (event) {
+            var checkboxes = document.getElementsByClassName("checkme");
+            var numIsChecked = 0;
+            for (let i = 0; i < (checkboxes.length - 1); i++) {
+                if (checkboxes[i].checked)
+                    numIsChecked++;
+            }
+            console.log(numIsChecked);
+            console.log(checkboxes);
+            if (numIsChecked == 0) {
+                alert("Please select a claim to edit.");
+                event.preventDefault()
+            }
+            if (numIsChecked > 1) {
+                alert("Please select only one claim to edit");
+                event.preventDefault()
             }
         });
+
+        document.getElementById("deleteClaim").addEventListener("click", function (event) {
+            var checkboxes = document.getElementsByClassName("checkme");
+            var isChecked = false;
+            for (let i = 0; i < (checkboxes.length - 1); i++) {
+                if (checkboxes[i].checked)
+                    isChecked = true;
+            }
+            if (!isChecked) {
+                alert("Please select at least one claim to delete.");
+                event.preventDefault();
+            }
+            else {
+                if (!confirm("Are you sure you want to delete")) {
+                    event.preventDefault();
+                }
+            }
+        });
+
         function openNav() {
             document.getElementById("mySidepanel").style.width = "250px";
             document.getElementById("main").style.marginLeft = "250px"
