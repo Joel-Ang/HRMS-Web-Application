@@ -358,14 +358,19 @@ module.exports = function(app) {
 
     app.post("/feedback_submitted", function (req, res) {
         // saving data in database
-        let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
-        let newrecord = [req.body.name, req.body.email, req.body.feedback];
-        db.query(sqlquery, newrecord, (err, result) => {
-            if (err) res.redirect("/");
-            else {
-                res.render("feedback.html", { text: "hi" });
-            }
-        });
+        if (req.session.username) {
+            let sqlquery = "Insert into feedback (name, email, feedback) values (?,?,?)";
+            let newrecord = [req.body.name, req.body.email, req.body.feedback];
+            db.query(sqlquery, newrecord, (err, result) => {
+                if (err) res.redirect("/");
+                else {
+                    let messages = "Feedback has been submitted";
+                    res.redirect("/feedback");
+                }
+            });
+        }
+        else
+            res.render("login.html");
     });
 
     app.get("/allFeedbacks", function (req, res) {
@@ -384,6 +389,19 @@ module.exports = function(app) {
         else
             res.render("login.html");
 
+    });
+
+    app.get("/deleteFeedback", function (req, res) {
+        if (req.session.username) {
+            let sqlquery = "DELETE FROM Feedback WHERE Feedback_id = ?";
+
+            db.query(sqlquery, req.query.id, (err, result) => {
+                res.redirect("/allFeedbacks");
+            });
+        }
+
+        else
+            res.redirect("/login");
     });
 
     app.post("/newClaims", function (req, res) {

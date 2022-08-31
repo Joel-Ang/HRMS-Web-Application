@@ -97,46 +97,68 @@
             clear: both;
         }
 
-        /* .sidepanel {
+        /* start of navigation bar */
+
+        body {
+            font-family: Verdana, sans-serif;
+        }
+
+
+        h1 {
+            display: inline-block;
+            align-content: center;
+            margin-left: 42%;
+        }
+
+        .sidepanel {
             width: 0;
             position: fixed;
             z-index: 1;
             height: 100%;
             top: 0;
             left: 0;
-            background-color: #111;
+            /* background-color: #111; */
+            background-color: white;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
-        } */
-
-        /* .sidepanel a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
         }
 
-        .sidepanel a:hover {
-            color: #f1f1f1;
-        }
+            .sidepanel a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                /* color: #818181; */
+                color: black;
+                /* color of the wording of home, leave, claims, feedback, register when panel first opens */
+                display: block;
+                transition: 0.3s;
+            }
 
-        .sidepanel .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-        }
+                .sidepanel a:hover {
+                    /* color: #f1f1f1; */
+                    color: rgba(0,0,0,0.4);
+                    /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
+                }
 
-        .sidepanel .logout {
-            background-color: mediumspringgreen;
-            color: black;
-            position: absolute;
-            bottom: 60px;
-            width: 210px;
-        }
+            .sidepanel .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+            }
+
+            .sidepanel .logout {
+                background-color: pink;
+                color: black;
+                position: relative;
+                margin-bottom: 250px;
+                top: 30px;
+                width: 200px;
+                right: 20px;
+                margin-left: 20px;
+                text-align: left;
+            }
 
         .openbtn {
             font-size: 20px;
@@ -147,123 +169,25 @@
             border: none;
         }
 
-        .openbtn:hover {
-            background-color: #444;
-        }
+            .openbtn:hover {
+                background-color: #444;
+            }
 
         #main {
             transition: margin-left .5s;
             padding: 16px;
-        } */
+        }
+
+        img {
+            margin-left: 80px;
+        }
+
+        h3 {
+            margin-left: 40px;
+        }
 
 
-
-
-
-      /* start of navigation bar */
-      
-      body 
-      {
-        font-family: Verdana, sans-serif; 
-      }
-      
-      
-      h1 
-      {
-        display: inline-block;
-        align-content: center;
-        margin-left: 42%;
-      }
-      
-      .sidepanel 
-      {
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        height: 100%;
-        top: 0;
-        left: 0;
-        /* background-color: #111; */
-        background-color: white;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-      }
-        
-      .sidepanel a 
-      {
-          padding: 8px 8px 8px 32px;
-          text-decoration: none;
-          font-size: 25px;
-          /* color: #818181; */
-          color: black;
-         /* color of the wording of home, leave, claims, feedback, register when panel first opens */
-          display: block;
-          transition: 0.3s;
-      }
-
-      .sidepanel a:hover 
-      {
-          /* color: #f1f1f1; */
-          color: rgba(0,0,0,0.4);
-       
-          /* when users hover over home, leave, claims, feedback, register, it'll change to this color */
-      }
-
-      .sidepanel .closebtn 
-      {
-          position: absolute;
-          top: 0;
-          right: 25px;
-          font-size: 36px;
-      }
-      
-      .sidepanel .logout 
-      {
-          background-color: pink;
-          color: black;
-          position: relative;
-          margin-bottom: 250px;
-          top: 30px;
-          width: 200px;
-          right: 20px; 
-          margin-left: 20px;
-          text-align: left;
-      
-      }
-
-      .openbtn 
-      {
-          font-size: 20px;
-          cursor: pointer;
-          background-color: #111;
-          color: white;
-          padding: 10px 15px;
-          border: none;
-      }
-
-      .openbtn:hover {
-        background-color: #444;
-      
-      }
-
-      #main {
-        transition: margin-left .5s;
-        padding: 16px;
-      }
-
-      img
-      {
-        margin-left: 80px;
-      }
-
-      h3
-      {
-        margin-left: 40px;
-      }
-
-
-      /* end of navigation bar */
+        /* end of navigation bar */
 
 
 
@@ -273,27 +197,28 @@
     <title>Feedback Form</title>
 </head>
 <body>
-       <!--Side Panel div-->
-       <div id="mySidepanel" class="sidepanel">
+    <!--Side Panel div-->
+    <div id="mySidepanel" class="sidepanel">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <img src= "images/smurf.png">
+        <img src="images/smurf.png">
         <br> </br>
-        <h3>The Smurfy Gang<h3>
-          <br> </br>
-          <br> </br>
-     
-        <a href="/">Home</a>
-        <a href="/allleaves">Leave</a>
-        <a href="/allclaims">Claims</a>
-        <a href="/feedback">Feedback</a>
-        <% if (session.roleid == 1 ){%>
-        <a href="/register">Register</a>
-        <a href="/allFeedbacks">View feedbacks</a>
-        <%}%>
-        <a href="/logout" id="logout" class="logout">Logout</a>
-      </div>
+        <h3>
+            The Smurfy Gang<h3>
+                <br> </br>
+                <br> </br>
 
-      
+                <a href="/">Home</a>
+                <a href="/allleaves">Leave</a>
+                <a href="/allclaims">Claims</a>
+                <a href="/feedback">Feedback</a>
+                <% if (session.roleid == 1 ){%>
+                <a href="/register">Register</a>
+                <a href="/allFeedbacks">View feedbacks</a>
+                <%}%>
+                <a href="/logout" id="logout" class="logout">Logout</a>
+    </div>
+
+
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
 
@@ -313,12 +238,12 @@
                 </div>
 
                 <div class="col-40">
-                    <input type="text" id="name" name="name" value="<%= staffDetails[0].Staff_name %>" disabled>
+                    <input type="text" id="name" name="name" value="<%= staffDetails[0].Staff_name %>" readonly>
                 </div>
                 <div class="col-10">
                 </div>
                 <div class="col-40">
-                    <input type="email" id="email" name="email" value="<%= staffDetails[0].email %>" disabled>
+                    <input type="email" id="email" name="email" value="<%= staffDetails[0].email %>" readonly>
                 </div>
                 <div class="row">
                     <div class="col-25">
@@ -329,7 +254,7 @@
                     <textarea type="text" id="feedback" name="feedback" placeholder="Input feedback here.." style="height:200px" required="required"></textarea>
                 </div>
                 <div class="row">
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" onclick="return confirm('Are you sure you want to submit the feedback?')">
                 </div>
             </form>
         </div>
