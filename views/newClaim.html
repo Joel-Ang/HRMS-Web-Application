@@ -149,11 +149,11 @@
             </br>
             <label>
                 Claim Date:
-                <input id="date" name="date" type="date">
+                <input required id="date" name="date" type="date">
             </label>
             <label>
                 Claim Type:
-                <select id="claimType" name="claimType">
+                <select required id="claimType" name="claimType">
 
                     <option value="">Select A Claim Type</option>
                     <% claimTypes.forEach(function(types){ %>
@@ -163,14 +163,14 @@
             </label>
             <label>
                 Claim Amount:
-                <span>$ <input type="number" id="claimAmount" name="claimAmount" step=0.01></span>
+                <span>$ <input required type="number" id="claimAmount" name="claimAmount" step=0.01></span>
             </label>
             </br>
             </br>
             <!--<label>Upload Receipt: </label><input type="file"> </br>-->
             <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Submit Claim">
             <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Save as Draft">
-            <input onclick="removeDisable()" type="submit" name="newClaimButtons" value="Cancel">
+            <button onclick="history.back()">Cancel</button>
 
         </form>
     </div>
