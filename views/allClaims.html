@@ -186,7 +186,11 @@
                     <% availableClaims.forEach(function(claim){ %>
                     <tr>
                         <td style="display:none;"><input value=<%= claim.claim_id %> name="claimid" type="text" /></td>
-                        <td><input class="checkme" type="checkbox" value="<%= claim.claim_id %>" name="checkbox" /></td>
+                        <% if (claim.status != "Approved") { %>
+                            <td><input class="checkme" type="checkbox" value="<%= claim.claim_id %>" name="checkbox" /></td>
+                        <% } else { %>
+                            <td></td>
+                        <% } %>
                         <td><%= claim.date_submitted %></td>
                         <td><%= claim.date_of_claim %></td>
                         <td><%= claim.type %></td>
