@@ -8,8 +8,6 @@ const mysql = require("mysql");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
 const port = 8089;
 
 // creating 24 hours from milliseconds
@@ -26,19 +24,28 @@ app.use(sessions({
 // cookie parser
 app.use(cookieParser());
 
+// create connection to database hosted on 
+// Public IP: 34.87.32.129 
 const db = mysql.createConnection ({
-    host: "localhost",
+    host: "34.87.32.129",
     user: "root",
-    password: "password",
-    database: "myAgileProject"
+    password: "RYsCu397",
+    database: "HRMS"
 });
+
+// const db = mysql.createConnection ({
+//     host: "localhost",
+//     user: "root",
+//     password: "password",
+//     database: "myAgileProject"
+// });
 
  // connect to database
  db.connect((err) => {
-  if (err) {
-  throw err;
-  }
-  console.log("Connected to database");
+    if (err) {
+        throw err;
+    }
+    console.log("Connected to database");
  });
  global.db = db;
 

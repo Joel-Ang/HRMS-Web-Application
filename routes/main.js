@@ -2,7 +2,7 @@ const e = require("express");
 
 // The main.js file of your application
 module.exports = function(app) {
-    // GET login page
+    //GET login page
     app.get("/login", function (req, res) {
         req.session.username ? res.render("index.html") : res.render("login.html");
     });
@@ -34,6 +34,7 @@ module.exports = function(app) {
         });
     })
     
+    //GET logout page
     app.get('/logout', (req, res) => {
         //Removes session when logging out
         req.session.destroy();
@@ -113,66 +114,68 @@ module.exports = function(app) {
           db.query(sqlquery, req.session.username, (err, result) => {
               if (err) res.redirect("/");
               else {
-                  res.render("allLeaves.html", { availableLeaves: result });
+                res.render("allLeaves.html", { availableLeaves: result });
               }
-          });
-      }
-      else
-          res.redirect("/login");
-    });
-
-    // GET addLeave page
-    app.get("/addLeave",function(req, res) {
-      if (req.session.username) {
-          let sqlquery = "SELECT Staff_name FROM Staff WHERE username = ?";
-        
-          db.query(sqlquery, req.session.username, (err, result) => {
-          if (err) res.redirect("/allLeaves");
-          else {
-              res.render("addLeave.html", { name: result });
-          }
           });
       }
       else
         res.redirect("/login");
     });
 
-    // POST addLeave page
-    app.post("/addLeave", function (req, res) {
-      if (req.session.username) {
-          // set request date to today's date
-          const requestdate = new Date();
-          
-          var statusVal;
-          if (req.body.newLeaveBtn == 'Submit') statusVal = 'Pending';
-          else if (req.body.newLeaveBtn == 'Save as draft') statusVal = 'Saved as Draft';
-
-          let sqlquery = "INSERT INTO Leave_ (Staff_id, LR_id, date_requested, start_date, end_date, status) VALUES (?,?,?,?,?,?)";
-          let temprecord = [session.roleid, req.body.requestreason, requestdate, req.body.startdate, req.body.enddate, statusVal]
-
-          // execute sql query
-          db.query(sqlquery, temprecord, (err, result) => {
-            (err) ? res.redirect("/addLeave") : res.redirect("/allLeaves");
-          });
-      }
-
-      else
-          res.redirect("/login");
-    })
-
-    app.get("/deleteLeave", function (req, res) {
-      if (req.session.username) {
-          let sqlquery = "DELETE FROM Leave_ WHERE Leave_id = ?";
-
-          db.query(sqlquery, req.query.id, (err, result) => {
-              res.redirect("/allLeaves");
-          });
-      }
-
-      else 
-          res.redirect("/login");
+    // GET addLeave page
+    app.get("/addLeave",function(req, res) {
+        if (req.session.username) {
+            let sqlquery = "SELECT Staff_name FROM Staff WHERE username = ?";
+            
+            db.query(sqlquery, req.session.username, (err, result) => {
+                if (err) res.redirect("/allLeaves");
+                else {
+                    res.render("addLeave.html", { name: result });
+                }
+            });
+        }
+        else
+            res.redirect("/login");
     });
 
+    // POST addLeave page
+    app.post("/addLeave", function (req, res) {
+        if (req.session.username) {
+            // set request date to today's date
+            const requestdate = new Date();
+            
+            var statusVal;
+            if (req.body.newLeaveBtn == 'Submit') statusVal = 'Pending';
+            else if (req.body.newLeaveBtn == 'Save as draft') statusVal = 'Saved as Draft';
+
+            let sqlquery = "INSERT INTO Leave_ (Staff_id, LR_id, date_requested, start_date, end_date, status) VALUES (?,?,?,?,?,?)";
+            let temprecord = [session.roleid, req.body.requestreason, requestdate, req.body.startdate, req.body.enddate, statusVal]
+
+            // execute sql query
+            db.query(sqlquery, temprecord, (err, result) => {
+                (err) ? res.redirect("/addLeave") : res.redirect("/allLeaves");
+            });
+        }
+
+        else
+            res.redirect("/login");
+    })
+
+    // GET deleteleave
+    app.get("/deleteLeave", function (req, res) {
+        if (req.session.username) {
+            let sqlquery = "DELETE FROM Leave_ WHERE Leave_id = ?";
+
+            db.query(sqlquery, req.query.id, (err, result) => {
+                res.redirect("/allLeaves");
+            });
+        }
+
+        else 
+            res.redirect("/login");
+    });
+
+    // GET editLeave page
     app.get("/editLeave", function (req, res) {
       if (req.session.username) {
           let sqlquery =  " SELECT Leave_.Leave_id, Staff.Staff_name, Department.Department_name, Leave_Reason.reason, Leave_.date_requested, Leave_.start_date, Leave_.end_date, Leave_.status" +
@@ -337,6 +340,7 @@ module.exports = function(app) {
         });
     });
 
+    // GET feedback page
     app.get("/feedback", function (req, res) {
 
         if (req.session.username) {
@@ -373,6 +377,7 @@ module.exports = function(app) {
             res.render("login.html");
     });
 
+    // GET all feedbacks page
     app.get("/allFeedbacks", function (req, res) {
 
         if (req.session.username) {
@@ -435,7 +440,7 @@ module.exports = function(app) {
         });
     });
 
-
+    // GET timetracker page
     app.get("/timetracker",function(req, res) {
       if (req.session.username) {
         let sqlquery = "SELECT Staff_id, Staff_name FROM Staff";
@@ -480,6 +485,7 @@ module.exports = function(app) {
         });
     });
 
+    // GET allpayslips page
     app.get("/allPayslips", function (req, res) {
 
         if (req.session.username) {
@@ -528,6 +534,11 @@ module.exports = function(app) {
         else
             res.render("login.html");
 
+    });
+
+    // GET about us page
+    app.get("/aboutus", function (req, res) {
+        req.session.username ? res.render("aboutus.html") : res.render("login.html");
     });
 }
     
