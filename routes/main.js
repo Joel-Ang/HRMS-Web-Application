@@ -253,14 +253,16 @@ module.exports = function(app) {
             res.redirect("/login");
     });
 
+    //POST All Claims Page
     app.post("/allClaims", function (req, res) {
         let buttonValue = req.body.claimButtons;
         if (buttonValue == 'New Claim' || buttonValue == 'Edit Claim') {
             let sqlquery = "SELECT Staff.Staff_id, Staff.Staff_name, Department.Department_name " +
                 " From Staff" +
-                " Join Department ON Staff.Dept_id = Department.Dept_id";
-            // + " WHERE Staff_id = ?";
-            db.query(sqlquery, (err, staffDetail) => {
+                " Join Department ON Staff.Dept_id = Department.Dept_id" +
+                " WHERE Staff_id = ?";
+            let staffid = [req.session.staffid];
+            db.query(sqlquery, staffid, (err, staffDetail) => {
                 if (err) res.redirect("/allClaims");
                 else {
                     let sqlclaimquery = "Select * from Claim_type";
@@ -312,6 +314,7 @@ module.exports = function(app) {
 
     });
 
+    //POST Edit Claims Page
     app.post("/editClaims", function (req, res) {
         const dateOfClaim = req.body.date + " 00:00:00";
 
@@ -340,7 +343,7 @@ module.exports = function(app) {
         });
     });
 
-    // GET feedback page
+    //GET feedback page
     app.get("/feedback", function (req, res) {
 
         if (req.session.username) {
@@ -360,6 +363,7 @@ module.exports = function(app) {
 
     });
 
+    //POST Feedback Submitted Page
     app.post("/feedback_submitted", function (req, res) {
         // saving data in database
         if (req.session.username) {
@@ -377,7 +381,7 @@ module.exports = function(app) {
             res.render("login.html");
     });
 
-    // GET all feedbacks page
+    //GET All Feedbacks Page
     app.get("/allFeedbacks", function (req, res) {
 
         if (req.session.username) {
@@ -396,6 +400,7 @@ module.exports = function(app) {
 
     });
 
+    //GET Delete Feedback Page
     app.get("/deleteFeedback", function (req, res) {
         if (req.session.username) {
             let sqlquery = "DELETE FROM Feedback WHERE Feedback_id = ?";
@@ -409,6 +414,7 @@ module.exports = function(app) {
             res.redirect("/login");
     });
 
+    //POST New Claims Page
     app.post("/newClaims", function (req, res) {
         const dateOfClaim = req.body.date + " 00:00:00";
 
@@ -440,7 +446,7 @@ module.exports = function(app) {
         });
     });
 
-    // GET timetracker page
+    //GET timetracker page
     app.get("/timetracker",function(req, res) {
       if (req.session.username) {
         let sqlquery = "SELECT Staff_id, Staff_name FROM Staff";
@@ -459,7 +465,7 @@ module.exports = function(app) {
           res.render("login.html");
     });
 
-      // POST timetracked page
+    //POST timetracked page
     app.post("/timetracked", function (req, res) {
         let sqlquery, newrecord;
 
@@ -485,7 +491,7 @@ module.exports = function(app) {
         });
     });
 
-    // GET allpayslips page
+    //GET allpayslips page
     app.get("/allPayslips", function (req, res) {
 
         if (req.session.username) {
@@ -504,6 +510,7 @@ module.exports = function(app) {
             res.render("login.html");
 
     });
+    //POST All Payslips Page
     app.post("/allPayslips", function (req, res) {
 
         if (req.session.username) {
