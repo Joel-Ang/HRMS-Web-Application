@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang = "en" dir = "ltr">
+<html lang="en" dir="ltr">
     <head>
         <meta charset = "utf-8">
         <title>User Login</title>
@@ -17,8 +17,6 @@
                 background-size: 50%;
                 background-color: bisque;
                 position:relative;
-
-
             }
 
             .center
@@ -31,25 +29,18 @@
                 height: 50vh;
                 background: white;
                 border-radius: 10px;
-                /* bottom: 400px; */
                 top: 500px;
-              
             }
 
 
             .center h2
             {
                 text-align: center;
-                /* padding: 0 0 20px 0; */
-    
-
             }
+
             .center h1
             {
                 text-align: center;
-                /* padding: 0 0 20px 0; */
-                /* border-bottom: 1px solid slateblue; */
-
             }
 
             .center h5
@@ -58,13 +49,8 @@
                 color: slateblue;
                 margin-top: -20px;
                 margin-bottom: 50px;
-                /* padding: 0 0 20px 0; */
-                /* border-bottom: 1px solid slateblue; */
-
             }
             
-            
-
             .center form 
             {
                 padding: 0 40px;
@@ -78,7 +64,6 @@
                 margin: 30px 0;
             }
 
-
             .txt_field input
             {
                 width: 100%;
@@ -88,7 +73,6 @@
                 border: none;
                 background: none;
                 outline: none;
-               
             }
 
             .txt_field label
@@ -100,8 +84,6 @@
                 transform: translateY(-50%);
                 font-size: 16px;
                 pointer-events: none;
-          
-
             }
 
             .txt_field span::before
@@ -121,13 +103,7 @@
             .txt_field span:valid ~ label
             {
                 top: -5px;
-                /* color: #2691d9; */
                 color: black;
-              
-            
-                /* margin-bottom: 50px; */
-  
-
             }
 
             .txt_field input:focus ~ span::before, 
@@ -167,10 +143,7 @@
             {
                 border-color: #2691d9;
                 transition: .5s;
-           
-
             }
-
 
             .signup_link
             {
@@ -179,7 +152,6 @@
                 font-size: 16px;
                 color: #6666;
                 text-decoration: none;
-
             }
 
             .signup_link a:hover
@@ -208,40 +180,31 @@
 
         </style>
     </head>
+    
     <body>
         <div class = "center">
             <h2> SIGN IN</h2>
             <h1>Welcome Back</h1>
             <h5>Sign In To Access Your Account</h5>
             <form action="/login" method="POST" >
-                <!-- <div id = "name">
-                <h2 class = "email">Email Address:</h2>
-                <span id = "errorname"></span> -->
-                <!-- <input class = "devicename" type = "text" name = "name" required= "char" minlength="1" maxlength="50" oninvalid="this.setCustomValidity('Name is required. It only takes in 50 characters.')"/> <br/>
-                <label class = "devicelabel">Enter the name of the new device</label>
-
-                </div> -->
+                
                 <div class="txt_field">
                     <input type="text" name="E_id" placeholder="" required>
                     <label>Username</label>
                 </div>
+                
                 <div class="txt_field">
                     <input type="password" name="password" placeholder="" required>
                     <label>Password</label>
                 </div>
-                <!-- <div class = "pass">Forgot Password?</div> -->
+
                 <input type="submit" style="width: 100%;">
 
                 <div class="checkbox">
                     <input type="checkbox" name="remember_me">Remember Me
                 </div>
-
                 
                 <img src="/images/boywithdog.png" style="position: absolute; bottom: 350px; right: 350px; width: 40%;">
-
-                <!-- <div class = "signup_link">
-                    Not a member? <a href = "#">Sign Up</a>
-                </div>-->
 
                 <div class="createacc">
                     <h6>Don't have an account? <a href="www.facebook.com">Create One</a></h6>
